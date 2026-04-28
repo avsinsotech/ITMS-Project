@@ -1,0 +1,90 @@
+const API_BASE_URL = `${import.meta.env.VITE_API_URL}/purchase`;
+
+/**
+ * Fetch all G-Sec / Purchase records from the database
+ */
+export const getPurchases = async () => {
+    const response = await fetch(API_BASE_URL);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch purchases: ${response.statusText}`);
+    }
+    return response.json();
+};
+
+/**
+ * Upload an Excel file to the database for UPSERT
+ */
+export const uploadPurchaseExcel = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${API_BASE_URL}/upload-excel`, {
+        method: 'POST',
+        body: formData,
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Failed to upload excel');
+    }
+
+    return response.json();
+};
+
+/**
+ * Get a single purchase by ID or Trade Number
+ */
+export const getPurchaseById = async (id) => {
+    const response = await fetch(`${API_BASE_URL}/${id}`);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch purchase ${id}`);
+    }
+    return response.json();
+};
+
+/**
+ * Authorize purchase records (calls stored procedure on backend)
+ */
+export const authorizePurchases = async (ids) => {
+    const response = await fetch(`${API_BASE_URL}/authorize`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ids }),
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Failed to authorize transactions');
+    }
+
+    return response.json();
+};
+
+/**
+ * Delete a purchase record from the database
+ */
+export const deletePurchase = async (id) => {
+    const response = await fetch(`${API_BASE_URL}/${id}`, {
+        method: 'DELETE',
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || `Failed to delete record ${id}`);
+    }
+
+    return response.json();
+};
+
+/**
+ * Get purchase records by postset (Set Number)
+ */
+export const getPurchasesByPostset = async (postset) => {
+    const response = await fetch(`${API_BASE_URL}/set/${postset}`);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch purchases for postset ${postset}`);
+    }
+    return response.json();
+};
