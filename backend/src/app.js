@@ -1,58 +1,80 @@
+// const express = require('express');
+// const cors = require('cors');
+// const swaggerUi = require('swagger-ui-express');
+// const swaggerSpecs = require('./config/swagger');
+// const purchaseRoutes = require('./routes/purchaseRoutes');
 
-// src/app.js
-const express      = require('express');
-const cors         = require('cors');
-const swaggerUi    = require('swagger-ui-express');
+// const app = express();
+
+// // Middleware
+// app.use(cors());
+// app.use(express.json());
+
+// // Routes
+// app.use('/api/purchase', purchaseRoutes);
+
+// // Swagger Documentation
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
+
+// module.exports = app;
+const express = require('express');
+const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
 const swaggerSpecs = require('./config/swagger');
 
-// ── Existing Routes ─────────────────────────────────────────────────────────
-const purchaseRoutes       = require('./routes/purchaseRoutes');
-const callMoneyRoutes      = require('./routes/callMoneyRoutes');
-const authRoutes           = require('./routes/authRoutes');
-const amcRoutes            = require('./routes/Amcroutes');
-const schemeRoutes         = require('./routes/Schemeroutes');
-const distributorRoutes    = require('./routes/Distributorroutes');
+// Core Routes
+const purchaseRoutes = require('./routes/purchaseRoutes');
+const fdRoutes = require('./routes/fdRoutes');  
+const bondRoutes = require('./routes/bondRoutes');  
+const callMoneyRoutes = require('./routes/callMoneyRoutes');
+const authRoutes = require('./routes/authRoutes');
+const reportRoutes = require('./routes/reportRoutes');
 
-// ── New: Investment Master (Term Deposit Add New / Add Existing) ─────────────
-const investmentMasterRoutes = require('./routes/investmentMasterRoutes');
+// Mutual Fund Master Routes
+const amcRoutes = require('./routes/Amcroutes');
+const schemeRoutes = require('./routes/Schemeroutes');
+const distributorRoutes = require('./routes/Distributorroutes');
 
 const app = express();
 
-// ── Middleware ───────────────────────────────────────────────────────────────
+// Middleware
 app.use(cors({
-    origin:             '*',
-    methods:            ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders:     ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
-    optionsSuccessStatus: 200,
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+    optionsSuccessStatus: 200
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ── Route Registration ───────────────────────────────────────────────────────
-app.use('/api/purchase',           purchaseRoutes);
-app.use('/api/call-money',         callMoneyRoutes);
-app.use('/api/auth',               authRoutes);
-app.use('/api/amc',                amcRoutes);
-app.use('/api/scheme',             schemeRoutes);
-app.use('/api/distributor',        distributorRoutes);
+// Routes Registration
+app.use('/api/purchase', purchaseRoutes);
+app.use('/api/fd', fdRoutes);          
+app.use('/api/bond', bondRoutes); 
+app.use('/api/call-money', callMoneyRoutes);
+app.use('/api/auth', authRoutes);
 
-// Investment Master — Term Deposit Add New / Add Existing
-app.use('/api/investment-master',  investmentMasterRoutes);
+// Mutual Fund Master Routes
+app.use('/api/amc', amcRoutes);
+app.use('/api/scheme', schemeRoutes);
+app.use('/api/distributor', distributorRoutes);
+app.use('/api/reports', reportRoutes);
 
-// ── Swagger Docs ─────────────────────────────────────────────────────────────
+// Swagger Documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
-// ── 404 Handler ──────────────────────────────────────────────────────────────
+// 404 Handler
 app.use((req, res) => {
     res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found.` });
 });
 
-// ── Global Error Handler ─────────────────────────────────────────────────────
+// Global Error Handler
 app.use((err, req, res, next) => {
     console.error(`[App Error]: ${err.stack || err.message}`);
-    res.status(err.status || 500).json({
-        success: false,
-        message: err.message || 'Internal Server Error',
+    res.status(err.status || 500).json({ 
+        success: false, 
+        message: err.message || 'Internal Server Error' 
     });
 });
 

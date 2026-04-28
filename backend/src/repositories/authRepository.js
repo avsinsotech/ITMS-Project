@@ -6,7 +6,7 @@ class AuthRepository {
         const pool = await poolPromise;
         const result = await pool.request()
             .input('username', sql.NVarChar, username)
-            .query("SELECT * FROM USERS WHERE USERNAME = @username");
+            .query("SELECT * FROM USERMASTER WHERE LOGINCODE = @username");
         return result.recordset[0];
     }
 }

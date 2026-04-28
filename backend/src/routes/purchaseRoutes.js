@@ -2,8 +2,12 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const purchaseController = require('../controllers/purchaseController');
+const authMiddleware = require('../utils/authMiddleware');
 
 const upload = multer({ storage: multer.memoryStorage() });
+
+// Apply authMiddleware to all purchase routes
+router.use(authMiddleware);
 
 /**
  * @swagger
@@ -155,5 +159,25 @@ router.delete('/:id', purchaseController.deleteById);
  *         description: Purchase records retrieved successfully
  */
 router.get('/set/:postset', purchaseController.getByPostset);
+
+/**
+ * @swagger
+ * /api/purchase/prodcode/{secType}:
+ *   get:
+ *     summary: Get ProdCode from GLMAST by Sec Type (GLNAME)
+ *     tags: [Purchase]
+ *     parameters:
+ *       - in: path
+ *         name: secType
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Product code retrieved
+ */
+router.get('/prodcode/:secType', purchaseController.getProductCodeBySecType);
+
+router.get('/securities/:prodCode', purchaseController.getSecuritiesByProdCode);
 
 module.exports = router;
