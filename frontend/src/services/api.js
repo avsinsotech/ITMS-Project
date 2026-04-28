@@ -15,6 +15,7 @@ export const getPurchases = async () => {
     const response = await fetch(API_BASE_URL, {
         headers: getAuthHeaders()
     });
+    const response = await fetch(API_BASE_URL);
     if (!response.ok) {
         throw new Error(`Failed to fetch purchases: ${response.statusText}`);
     }

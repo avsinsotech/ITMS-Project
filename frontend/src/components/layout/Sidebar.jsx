@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import {
   LayoutDashboard, ChevronDown, ChevronRight, ChevronUp,
@@ -12,6 +14,40 @@ import {
   BarChart3, PlusCircle, Briefcase, Search, Settings,
 } from 'lucide-react';
 
+/* ─────────────────────────────────────────────
+  FilePlus, FileCheck, FileX, FileBarChart, Banknote,
+} from 'lucide-react';
+
+/* ─────────────────────────────────────────────
+   FD & BONDS SUBMENU CONFIG
+───────────────────────────────────────────────*/
+const FD_BONDS_SUBMENU = [
+
+  { id: 'fd_term_deposit_create', label: 'Term Deposit Create',   icon: Banknote      },
+  { id: 'fd_term_deposit_receipt',label: 'Term Deposit Receipt',  icon: FileCheck     },
+  { id: 'fd_term_deposit_close',  label: 'Term Deposit Close',    icon: FileX         },
+  { id: 'fd_term_deposit_calc', label: 'Term Deposit Calculation', icon: Calculator },
+  // { id: 'fd_term_deposit_report', label: 'Term Deposit Report',   icon: FileBarChart  },
+  {
+    id: 'fd_term_deposit_report',
+    label: 'Term Deposit Report',
+    icon: FileBarChart,
+    hasReportSub: true,
+    subItems: [
+      { id: 'fd_report_balance',    label: 'Balance Register'    },
+      { id: 'fd_report_investment', label: 'Investment Register' },
+      { id: 'fd_report_maturity',   label: 'Investment Maturity' },
+      // { id: 'fd_report_interest',   label: 'Interest Statement'  },
+      // { id: 'fd_report_tds',        label: 'TDS Report'          },
+    ],
+  },
+];
+
+// const FD_BONDS_IDS = new Set(FD_BONDS_SUBMENU.map(i => i.id));
+const FD_BONDS_IDS = new Set([
+  ...FD_BONDS_SUBMENU.map(i => i.id),
+  ...FD_BONDS_SUBMENU.flatMap(i => i.subItems?.map(s => s.id) ?? []),
+]);
 /* ─────────────────────────────────────────────
    MF SUBMENU CONFIG
 ───────────────────────────────────────────────*/
@@ -199,6 +235,8 @@ const navSections = [
         ]
       },
       { id: 'fd_bonds',    icon: Building2, text: 'FD & Bonds' },
+      // ── FD & Bonds now has hasFdBondsSub flag ──
+      { id: 'fd_bonds', icon: Building2, text: 'FD & Bonds', hasFdBondsSub: true },
       { id: 'mutual_fund', icon: LineChart, text: 'Mutual Funds', hasSub: true },
       { id: 'call_money',  icon: PhoneCall, text: 'Call / Notice Money' },
       { id: 'cp_cd',       icon: FileText,  text: 'CP / CD Market', hasCpCdSub: true },
@@ -211,6 +249,7 @@ const navSections = [
       { id: 'interest',  icon: CircleDollarSign, text: 'Interest & Income' },
       { id: 'valuation', icon: TrendingDown,     text: 'Valuation (MTM)' },
       { id: 'transfer',  icon: Repeat,           text: 'Category Shift' },
+      { id: 'transfer',  icon: Repeat,           text: 'Category Transfer' },
       { id: 'renewal',   icon: RefreshCcw,       text: 'FD / CP Renewal' },
     ],
   },
@@ -235,6 +274,18 @@ const navSections = [
 export default function Sidebar({ activeScreen, onNavigate, cpcdSubScreen, onCpcdNavigate }) {
   const isCpCdActive = activeScreen === 'cp_cd';
   const isMfActive   = MF_IDS.has(activeScreen) || activeScreen === 'mutual_fund';
+export default function Sidebar({
+  activeScreen,
+  onNavigate,
+  cpcdSubScreen,
+  onCpcdNavigate,
+  // ── NEW props for FD & Bonds ──
+  fdBondsSubScreen,
+  onFdBondsNavigate,
+}) {
+  const isCpCdActive    = activeScreen === 'cp_cd';
+  const isMfActive      = MF_IDS.has(activeScreen) || activeScreen === 'mutual_fund';
+  const isFdBondsActive = FD_BONDS_IDS.has(activeScreen) || activeScreen === 'fd_bonds';
 
   // ── G-Sec expanded items ──
   const [expandedItems, setExpandedItems] = useState(() => {
@@ -280,6 +331,11 @@ export default function Sidebar({ activeScreen, onNavigate, cpcdSubScreen, onCpc
   };
   const [mfGroupOpen, setMfGroupOpen] = useState(initMFGroups);
 
+  // ── FD & Bonds panel open/close ──
+  const [fdBondsExpanded, setFdBondsExpanded] = useState(isFdBondsActive);
+const [fdReportOpen, setFdReportOpen] = useState(
+  activeScreen?.startsWith('fd_report_')
+);
   /* ── helpers ── */
   const toggleExpand = (id) => {
     setExpandedItems(prev => ({ ...prev, [id]: !prev[id] }));
@@ -301,6 +357,17 @@ export default function Sidebar({ activeScreen, onNavigate, cpcdSubScreen, onCpc
     }
   };
 
+  // ── FD & Bonds click handler (mirrors CP/CD pattern) ──
+  const handleFdBondsClick = () => {
+    if (!isFdBondsActive) {
+      onNavigate('fd_bonds');
+      if (!fdBondsSubScreen && onFdBondsNavigate) onFdBondsNavigate('fd_new_purchase');
+      setFdBondsExpanded(true);
+    } else {
+      setFdBondsExpanded(prev => !prev);
+    }
+  };
+
   const isSubItemActive = (item) => {
     if (activeScreen === item.id) return true;
     if (item.subSections) {
@@ -312,6 +379,8 @@ export default function Sidebar({ activeScreen, onNavigate, cpcdSubScreen, onCpc
   };
 
   const showCpCdSub = isCpCdActive && cpcdExpanded;
+  const showCpCdSub    = isCpCdActive && cpcdExpanded;
+  const showFdBondsSub = isFdBondsActive && fdBondsExpanded;
 
   return (
     <nav className="sidebar">
@@ -330,6 +399,9 @@ export default function Sidebar({ activeScreen, onNavigate, cpcdSubScreen, onCpc
             const hasGSecSub = !!item.subSections;
             const isGSecExpanded = !!expandedItems[item.id];
             const isGSecActive = isSubItemActive(item);
+            const hasGSecSub    = !!item.subSections;
+            const isGSecExpanded = !!expandedItems[item.id];
+            const isGSecActive  = isSubItemActive(item);
 
             /* ════════════════════════════════
                MUTUAL FUNDS — with submenu
@@ -357,6 +429,8 @@ export default function Sidebar({ activeScreen, onNavigate, cpcdSubScreen, onCpc
                       {MF_SUBMENU.map((group) => {
                         const isOpen      = mfGroupOpen[group.label];
                         const hasActive   = group.items.some(i => i.id === activeScreen);
+                        const isOpen    = mfGroupOpen[group.label];
+                        const hasActive = group.items.some(i => i.id === activeScreen);
                         return (
                           <div key={group.label} className="nav-sub-group">
                             <div
@@ -390,6 +464,127 @@ export default function Sidebar({ activeScreen, onNavigate, cpcdSubScreen, onCpc
                 </div>
               );
             }
+
+            /* ════════════════════════════════
+               FD & BONDS — with submenu
+            ════════════════════════════════ */
+           if (item.hasFdBondsSub) {
+  return (
+    <div key={item.id}>
+      <div
+        className={`nav-item ${isFdBondsActive ? 'active' : ''}`}
+        onClick={handleFdBondsClick}
+      >
+        <item.icon size={16} strokeWidth={2.5} className="icon" />
+        <span style={{ flex: 1 }}>{item.text}</span>
+        {showFdBondsSub
+          ? <ChevronUp   size={12} style={{ opacity: 0.5, flexShrink: 0 }} />
+          : <ChevronDown size={12} style={{ opacity: 0.5, flexShrink: 0 }} />
+        }
+      </div>
+
+      {showFdBondsSub && (
+        <div className="nav-nested-container expanded">
+          <div className="nav-nested-level-3 expanded">
+            {FD_BONDS_SUBMENU.map((sub, idx) => {
+              const SubIcon = sub.icon;
+
+              if (sub.hasReportSub) {
+                // ── highlight when any sub-report is active OR report parent itself ──
+                const reportParentActive =
+                  fdBondsSubScreen === sub.id ||
+                  sub.subItems.some(r => r.id === activeScreen);
+
+                return (
+                  <div key={sub.id}>
+                    {/* ── Report parent row ── */}
+                    <div
+                      className={`nav-sub-item ${reportParentActive ? 'active' : ''}`}
+                      onClick={() => {
+                        setFdReportOpen(o => !o);
+                        onFdBondsNavigate?.(sub.id); // ← marks it active
+                      }}
+                      style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+                    >
+                      <span style={{
+                        background: reportParentActive ? 'var(--gold)' : 'var(--navy)',
+                        color:      reportParentActive ? 'var(--navy)' : '#fff',
+                        fontSize: 9, width: 18, height: 18, borderRadius: 3,
+                        display: 'flex', alignItems: 'center',
+                        justifyContent: 'center', fontWeight: 700, flexShrink: 0,
+                      }}>
+                        {idx + 1}
+                      </span>
+                      <SubIcon size={12} strokeWidth={2} style={{ flexShrink: 0 }} />
+                      <span style={{ fontSize: 11, lineHeight: 1.3, flex: 1 }}>{sub.label}</span>
+                      {fdReportOpen
+                        ? <ChevronUp   size={10} style={{ opacity: 0.5, flexShrink: 0 }} />
+                        : <ChevronDown size={10} style={{ opacity: 0.5, flexShrink: 0 }} />
+                      }
+                    </div>
+
+                    {/* ── Report sub-items with a/b/c/d letters ── */}
+                    {fdReportOpen && (
+                      <div style={{ paddingLeft: 28 }}>
+                        {sub.subItems.map((rep, repIdx) => (
+                          <div
+                            key={rep.id}
+                            className={`nav-sub-item ${activeScreen === rep.id ? 'active' : ''}`}
+                            onClick={() => onFdBondsNavigate?.(rep.id)}
+                            style={{
+                              fontSize: 10.5, paddingLeft: 8,
+                              borderLeft: '2px solid var(--border)',
+                              display: 'flex', alignItems: 'center', gap: 6,
+                            }}
+                          >
+                            <span style={{
+                              background: activeScreen === rep.id ? 'var(--gold)' : 'transparent',
+                              color:      activeScreen === rep.id ? 'var(--navy)' : 'var(--gold)',
+                              border:     '1px solid var(--gold)',
+                              fontSize: 8, width: 16, height: 16, borderRadius: 3,
+                              display: 'flex', alignItems: 'center',
+                              justifyContent: 'center', fontWeight: 700, flexShrink: 0,
+                            }}>
+                              {String.fromCharCode(97 + repIdx)}
+                            </span>
+                            {rep.label}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              // ── Regular FD sub-items (1–4) ──
+              return (
+                <div
+                  key={sub.id}
+                  className={`nav-sub-item ${fdBondsSubScreen === sub.id ? 'active' : ''}`}
+                  onClick={() => onFdBondsNavigate?.(sub.id)}
+                  style={{ display: 'flex', alignItems: 'center', gap: 6 }}
+                >
+                  <span style={{
+                    background: fdBondsSubScreen === sub.id ? 'var(--gold)' : 'var(--navy)',
+                    color:      fdBondsSubScreen === sub.id ? 'var(--navy)' : '#fff',
+                    fontSize: 9, width: 18, height: 18, borderRadius: 3,
+                    display: 'flex', alignItems: 'center',
+                    justifyContent: 'center', fontWeight: 700, flexShrink: 0,
+                  }}>
+                    {idx + 1}
+                  </span>
+                  <SubIcon size={12} strokeWidth={2} style={{ flexShrink: 0 }} />
+                  <span style={{ fontSize: 11, lineHeight: 1.3 }}>{sub.label}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+  
 
             /* ════════════════════════════════
                CP / CD MARKET — with submenu

@@ -13,6 +13,7 @@ import Portfolio from './components/screens/Portfolio';
 import GSec from './components/screens/GSec';
 import CategoryShift from './components/screens/CategoryShift';
 import FDBonds from './components/screens/FDBonds';
+
 import CallMoney from './components/screens/CallMoney';
 import CPCD from './components/screens/CPCD';
 import MaturityTracker from './components/screens/MaturityTracker';
@@ -35,6 +36,21 @@ import GSecSell from './components/screens/GSecSell';
 import SecurityMaster from './components/screens/SecurityMaster';
 import BrokerMaster from './components/screens/BrokerMaster';
 import HoldingRegister from './components/screens/HoldingRegister';
+import TermDepositCreate from './components/screens/TermDepositCreate';
+import TermDepositReceipt from './components/screens/TermDepositReceipt';
+import TermDepositClose from './components/screens/TermDepositClose'
+import TermDepositCalc from './components/screens/TermDepositCalc';
+import BalanceRegister from './components/screens/BalanceRegister';
+import InvestmentRegister from './components/screens/InvestmentRegister';
+import InvestmentMaturity from './components/screens/InvestmentMaturity';
+
+// in renderScreen():
+
+// inside renderScreen():
+
+import GSecSell from './components/screens/GSecSell';
+import SecurityMaster from './components/screens/SecurityMaster';
+import BrokerMaster from './components/screens/BrokerMaster';
 
 // Mutual Fund Master & Setup
 import MFDashboard from './components/screens/MFDashboard';
@@ -74,6 +90,12 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
   const [activeScreen, setActiveScreen] = useState(localStorage.getItem('activeScreen') || 'dashboard');
   const [cpcdSubScreen, setCpcdSubScreen] = useState('s1');
+
+export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+  const [activeScreen, setActiveScreen] = useState('dashboard');
+  const [cpcdSubScreen, setCpcdSubScreen] = useState('s1');
+ const [fdBondsSubScreen, setFdBondsSubScreen] = useState('fd_term_deposit_create');
   const [screenParams, setScreenParams] = useState({});
   const [modals, setModals] = useState({
     checker: false,
@@ -130,6 +152,7 @@ const navigate = (screenId, params = {}) => {
       case 'gsec_security_master': return <SecurityMaster {...props} />;
       case 'gsec_broker_master': return <BrokerMaster {...props} />;
       case 'fd_bonds': return <FDBonds {...props} />;
+     
       
       // Mutual Fund Sub-screens
       case 'mf_dashboard':     return <MFDashboard {...props} />;
@@ -155,6 +178,20 @@ const navigate = (screenId, params = {}) => {
 
       case 'call_money': return <CallMoney {...props} />;
       case 'cp_cd': return <CPCD {...props} subScreen={cpcdSubScreen} />;
+     case 'fd_bonds':
+case 'fd_term_deposit_create':return <TermDepositCreate {...props} />;
+case 'fd_term_deposit_receipt':return <TermDepositReceipt {...props} />;
+  case 'fd_term_deposit_close':  return <TermDepositClose {...props} />;
+  case 'fd_term_deposit_calc': return <TermDepositCalc {...props} />;
+// case 'fd_term_deposit_report':   return <div>Term Deposit Report</div>;
+// case 'fd_report_balance':    return <div>Balance Register</div>;
+case 'fd_report_balance': return <BalanceRegister {...props} />;
+// case 'fd_report_investment': return <div>Investment Register</div>;
+case 'fd_report_investment': return <InvestmentRegister {...props} />;
+// case 'fd_report_maturity':   return <div>Investment Maturity</div>;
+case 'fd_report_maturity': return <InvestmentMaturity {...props} />;
+// case 'fd_report_interest':   return <div>Interest Statement</div>;
+// case 'fd_report_tds':        return <div>TDS Report</div>;
       case 'maturity': return <MaturityTracker {...props} />;
       case 'interest': return <InterestIncome {...props} />;
       case 'valuation': return <Valuation {...props} />;
@@ -173,6 +210,8 @@ const navigate = (screenId, params = {}) => {
       //case 'bond_view':      return <BondView onNavigate={navigate} params={screenParams} />;
       case 'bond_view': return <BondView {...props} />;
       case 'gsec_portfolio_holding': return <HoldingRegister {...props} />;
+     
+     
       default: return <Dashboard {...props} />;
     }
   };
@@ -287,6 +326,7 @@ const navigate = (screenId, params = {}) => {
 //     </>
 //   );
 // }
+
 return (
     <>
       <div className="app-shell">
@@ -295,6 +335,10 @@ return (
           onNavigate={navigate} 
           cpcdSubScreen={cpcdSubScreen}
           onCpcdNavigate={handleCpcdNavigate}
+
+          onCpcdNavigate={handleCpcdNavigate}
+          fdBondsSubScreen={fdBondsSubScreen}         
+  onFdBondsNavigate={handleFdBondsNavigate}    
         />
         <div className="main">
           <Topbar activeScreen={activeScreen} onNavigate={navigate} onLogout={handleLogout} />
