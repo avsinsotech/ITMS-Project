@@ -1,7 +1,0 @@
-node_modules/
-.env
-*.log
-trace_log.txt
-execution_logs.txt
-scratch/
-.DS_Store

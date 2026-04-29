@@ -40,12 +40,14 @@ const config = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     server: process.env.DB_SERVER,
+    server: process.env.DB_SERVER,       // Make sure .env is loaded before this runs
     database: process.env.DB_DATABASE,
     options: {
         encrypt: false,
         trustServerCertificate: true,
         enableArithAbort: true,
         multipleActiveResultSets: true   // Required for SPs that return multiple recordsets
+        multipleActiveResultSets: true
     },
     pool: {
         max: 10,
@@ -54,6 +56,18 @@ const config = {
     }
 };
 
+const poolPromise = new sql.ConnectionPool(config)
+    .connect()
+    .then(pool => {
+        console.log('Connected to MSSQL Database');
+        return pool;
+    })
+    .catch(err => {
+        console.error('Database Connection Failed!', err);
+        throw err;
+    });
+
+module.exports = { sql, poolPromise };
 let poolPromise;
 
 function getPool() {
@@ -73,5 +87,4 @@ function getPool() {
     return poolPromise;
 }
 
-module.exports = { sql, getPool, poolPromise: getPool() };
-
+module.exports = { sql, getPool };
