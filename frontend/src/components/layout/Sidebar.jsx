@@ -12,9 +12,6 @@ import {
   Building2, Landmark, ShieldCheck, AlertTriangle,
   CheckCircle2, Info, XCircle, Download, RefreshCw,
   BarChart3, PlusCircle, Briefcase, Search, Settings,
-} from 'lucide-react';
-
-/* ─────────────────────────────────────────────
   FilePlus, FileCheck, FileX, FileBarChart, Banknote,
 } from 'lucide-react';
 
@@ -234,9 +231,7 @@ const navSections = [
           }
         ]
       },
-      { id: 'fd_bonds',    icon: Building2, text: 'FD & Bonds' },
-      // ── FD & Bonds now has hasFdBondsSub flag ──
-      { id: 'fd_bonds', icon: Building2, text: 'FD & Bonds', hasFdBondsSub: true },
+      { id: 'fd_bonds',    icon: Building2, text: 'FD & Bonds', hasFdBondsSub: true },
       { id: 'mutual_fund', icon: LineChart, text: 'Mutual Funds', hasSub: true },
       { id: 'call_money',  icon: PhoneCall, text: 'Call / Notice Money' },
       { id: 'cp_cd',       icon: FileText,  text: 'CP / CD Market', hasCpCdSub: true },
@@ -249,7 +244,6 @@ const navSections = [
       { id: 'interest',  icon: CircleDollarSign, text: 'Interest & Income' },
       { id: 'valuation', icon: TrendingDown,     text: 'Valuation (MTM)' },
       { id: 'transfer',  icon: Repeat,           text: 'Category Shift' },
-      { id: 'transfer',  icon: Repeat,           text: 'Category Transfer' },
       { id: 'renewal',   icon: RefreshCcw,       text: 'FD / CP Renewal' },
     ],
   },
@@ -271,9 +265,6 @@ const navSections = [
   },
 ];
 
-export default function Sidebar({ activeScreen, onNavigate, cpcdSubScreen, onCpcdNavigate }) {
-  const isCpCdActive = activeScreen === 'cp_cd';
-  const isMfActive   = MF_IDS.has(activeScreen) || activeScreen === 'mutual_fund';
 export default function Sidebar({
   activeScreen,
   onNavigate,
@@ -361,7 +352,7 @@ const [fdReportOpen, setFdReportOpen] = useState(
   const handleFdBondsClick = () => {
     if (!isFdBondsActive) {
       onNavigate('fd_bonds');
-      if (!fdBondsSubScreen && onFdBondsNavigate) onFdBondsNavigate('fd_new_purchase');
+      if (!fdBondsSubScreen && onFdBondsNavigate) onFdBondsNavigate('fd_term_deposit_create');
       setFdBondsExpanded(true);
     } else {
       setFdBondsExpanded(prev => !prev);
@@ -378,7 +369,6 @@ const [fdReportOpen, setFdReportOpen] = useState(
     return false;
   };
 
-  const showCpCdSub = isCpCdActive && cpcdExpanded;
   const showCpCdSub    = isCpCdActive && cpcdExpanded;
   const showFdBondsSub = isFdBondsActive && fdBondsExpanded;
 
@@ -396,9 +386,6 @@ const [fdReportOpen, setFdReportOpen] = useState(
           <div className="sidebar-section-label">{section.label}</div>
 
           {section.items.map((item) => {
-            const hasGSecSub = !!item.subSections;
-            const isGSecExpanded = !!expandedItems[item.id];
-            const isGSecActive = isSubItemActive(item);
             const hasGSecSub    = !!item.subSections;
             const isGSecExpanded = !!expandedItems[item.id];
             const isGSecActive  = isSubItemActive(item);
@@ -427,8 +414,6 @@ const [fdReportOpen, setFdReportOpen] = useState(
                   {mfOpen && (
                     <div className="nav-nested-container expanded">
                       {MF_SUBMENU.map((group) => {
-                        const isOpen      = mfGroupOpen[group.label];
-                        const hasActive   = group.items.some(i => i.id === activeScreen);
                         const isOpen    = mfGroupOpen[group.label];
                         const hasActive = group.items.some(i => i.id === activeScreen);
                         return (

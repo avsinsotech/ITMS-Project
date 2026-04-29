@@ -35,6 +35,7 @@ import BondView from './components/screens/BondView';
 import GSecSell from './components/screens/GSecSell';
 import SecurityMaster from './components/screens/SecurityMaster';
 import BrokerMaster from './components/screens/BrokerMaster';
+import GSecPolicy from './components/screens/GSecPolicy';
 import HoldingRegister from './components/screens/HoldingRegister';
 import TermDepositCreate from './components/screens/TermDepositCreate';
 import TermDepositReceipt from './components/screens/TermDepositReceipt';
@@ -48,9 +49,6 @@ import InvestmentMaturity from './components/screens/InvestmentMaturity';
 
 // inside renderScreen():
 
-import GSecSell from './components/screens/GSecSell';
-import SecurityMaster from './components/screens/SecurityMaster';
-import BrokerMaster from './components/screens/BrokerMaster';
 
 // Mutual Fund Master & Setup
 import MFDashboard from './components/screens/MFDashboard';
@@ -86,10 +84,7 @@ import Mfauditlog from './components/screens/Mfauditlog';
 //     mfRedeem: false,
 //     cmRoll: false,
 //   });
-export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
-  const [activeScreen, setActiveScreen] = useState(localStorage.getItem('activeScreen') || 'dashboard');
-  const [cpcdSubScreen, setCpcdSubScreen] = useState('s1');
+
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
@@ -106,6 +101,11 @@ export default function App() {
   const handleCpcdNavigate = (subId) => {
     setActiveScreen('cp_cd');
     setCpcdSubScreen(subId);
+  };
+
+  const handleFdBondsNavigate = (subId) => {
+    setActiveScreen(subId);
+    setFdBondsSubScreen(subId);
   };
 
   const handleLogout = () => {
@@ -151,9 +151,8 @@ const navigate = (screenId, params = {}) => {
       case 'gsec_sell': return <GSecSell {...props} />;
       case 'gsec_security_master': return <SecurityMaster {...props} />;
       case 'gsec_broker_master': return <BrokerMaster {...props} />;
-      case 'fd_bonds': return <FDBonds {...props} />;
-     
-      
+      case 'gsec_policy': return <GSecPolicy {...props} />;
+      case 'fd_bonds': return <FDBonds {...props} subScreen={fdBondsSubScreen} />;
       // Mutual Fund Sub-screens
       case 'mf_dashboard':     return <MFDashboard {...props} />;
       case 'mf_amc_master':    return <Amcmaster {...props} />;
@@ -178,7 +177,6 @@ const navigate = (screenId, params = {}) => {
 
       case 'call_money': return <CallMoney {...props} />;
       case 'cp_cd': return <CPCD {...props} subScreen={cpcdSubScreen} />;
-     case 'fd_bonds':
 case 'fd_term_deposit_create':return <TermDepositCreate {...props} />;
 case 'fd_term_deposit_receipt':return <TermDepositReceipt {...props} />;
   case 'fd_term_deposit_close':  return <TermDepositClose {...props} />;
@@ -221,111 +219,6 @@ case 'fd_report_maturity': return <InvestmentMaturity {...props} />;
     return <LoginScreen onLogin={() => setIsLoggedIn(true)} />;
   }
 
-//   return (
-//     <>
-//       <div className="app-shell">
-//         {/* Sidebar */}
-//         <Sidebar activeScreen={activeScreen} onNavigate={navigate} />
-
-//         {/* Main Content */}
-//         <div className="main">
-//           <Topbar activeScreen={activeScreen} onNavigate={navigate} onLogout={() => setIsLoggedIn(false)} />
-//           <div className="content">
-//             <div key={activeScreen} className="screen active">
-//               {renderScreen()}
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* ========== MODALS ========== */}
-
-//       {/* Checker Approval Modal */}
-//       <Modal
-//         show={modals.checker}
-//         onClose={() => closeModal('checker')}
-//         title={<div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><ShieldCheck size={18} /> Submit for Checker Approval</div>}
-//         footer={
-//           <>
-//             <button className="topbar-btn btn-outline" onClick={() => closeModal('checker')}>Cancel</button>
-//             <button className="topbar-btn btn-primary" onClick={() => { closeModal('checker'); alert('✅ Submitted to Checker for approval!'); }}>Submit for Approval</button>
-//           </>
-//         }
-//       >
-//         <div className="rbi-info-box">
-//           <div className="rbi-header">
-//             <span className="rbi-tag">RBI</span>
-//             <span style={{ fontSize: '10px', fontWeight: 600, color: 'var(--navy)', display: 'flex', alignItems: 'center', gap: '4px' }}>
-//               <ShieldCheck size={10} /> Dual Control — Maker-Checker for ≥ ₹25 Lakhs
-//             </span>
-//           </div>
-//           <div className="rbi-text">All investments ≥ ₹25 Lakhs require independent Checker approval. Checker must verify instrument, amount, rate, limit, classification and compliance before approval.</div>
-//         </div>
-//         <div className="form-group" style={{ marginBottom: '12px' }}>
-//           <label className="form-label">Select Checker <span className="req">*</span></label>
-//           <select className="form-select">
-//             <option>Checker 1 – Sr. Manager Treasury</option>
-//             <option>Checker 2 – GM Finance</option>
-//           </select>
-//         </div>
-//         <div className="form-group">
-//           <label className="form-label">Remarks for Checker</label>
-//           <textarea className="form-textarea" rows="3" defaultValue="Investment within board approved limits. All compliance checks passed." />
-//         </div>
-//       </Modal>
-
-//       {/* MF Redeem Modal */}
-//       <Modal
-//         show={modals.mfRedeem}
-//         onClose={() => closeModal('mfRedeem')}
-//         title="Mutual Fund Redemption"
-//         footer={
-//           <>
-//             <button className="topbar-btn btn-outline" onClick={() => closeModal('mfRedeem')}>Cancel</button>
-//             <button className="topbar-btn btn-primary" onClick={() => { closeModal('mfRedeem'); openModal('checker'); }}>Submit Redemption</button>
-//           </>
-//         }
-//       >
-//         <div className="alert-banner info" style={{ marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-//           <Info size={14} /> HDFC Liquid Fund — Redemption T+1 settlement. Min redemption ₹500.
-//         </div>
-//         <div className="form-grid">
-//           <div className="form-group"><label className="form-label">Folio</label><input className="form-input readonly" defaultValue="HDFC/LF/0045" readOnly /></div>
-//           <div className="form-group"><label className="form-label">Current Value (₹)</label><input className="form-input readonly" defaultValue="₹3,32,10,430" readOnly /></div>
-//           <div className="form-group"><label className="form-label">Redemption Amount (₹)</label><input className="form-input" defaultValue="1,00,00,000" /></div>
-//           <div className="form-group"><label className="form-label">Reason</label>
-//             <select className="form-select"><option>Liquidity Requirement</option><option>Reinvestment</option></select>
-//           </div>
-//         </div>
-//       </Modal>
-
-//       {/* Call Money Rollover Modal */}
-//       <Modal
-//         show={modals.cmRoll}
-//         onClose={() => closeModal('cmRoll')}
-//         title="Call Money Rollover"
-//         footer={
-//           <>
-//             <button className="topbar-btn btn-outline" onClick={() => closeModal('cmRoll')}>Cancel</button>
-//             <button className="topbar-btn btn-primary" onClick={() => { closeModal('cmRoll'); alert('✅ Call Money rolled over @ 6.62% for 16-Apr-2026. NDS-CALL updated.'); }}>Confirm Rollover</button>
-//           </>
-//         }
-//       >
-//         <div className="alert-banner warning" style={{ marginBottom: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-//           <AlertTriangle size={14} /> Rollover must be confirmed before 12:00 Noon. Report on NDS-CALL.
-//         </div>
-//         <div className="form-grid">
-//           <div className="form-group"><label className="form-label">Deal ID</label><input className="form-input readonly" defaultValue="CM-2604-001" readOnly /></div>
-//           <div className="form-group"><label className="form-label">Counterparty</label><input className="form-input readonly" defaultValue="SBI – Mumbai" readOnly /></div>
-//           <div className="form-group"><label className="form-label">Principal (₹)</label><input className="form-input readonly" defaultValue="1,00,00,000" readOnly /></div>
-//           <div className="form-group"><label className="form-label">New Rate % (today)</label><input className="form-input" defaultValue="6.62" /><div className="form-hint">Market rate today: 6.62%</div></div>
-//           <div className="form-group"><label className="form-label">Rollover Date</label><input className="form-input" type="date" defaultValue="2026-04-16" /></div>
-//           <div className="form-group"><label className="form-label">New Maturity</label><input className="form-input readonly" defaultValue="17-Apr-2026" readOnly /></div>
-//         </div>
-//       </Modal>
-//     </>
-//   );
-// }
 
 return (
     <>
@@ -336,7 +229,6 @@ return (
           cpcdSubScreen={cpcdSubScreen}
           onCpcdNavigate={handleCpcdNavigate}
 
-          onCpcdNavigate={handleCpcdNavigate}
           fdBondsSubScreen={fdBondsSubScreen}         
   onFdBondsNavigate={handleFdBondsNavigate}    
         />
