@@ -1,0 +1,15 @@
+[2026-04-28T11:37:05.193Z] EXEC ISP_GSecuTransaction
+PARAMS: {"ID":"526","MID":"12","EntryDate":"2026-04-28T11:37:04.816Z","Flag":"Purchase","BRCD":"1","Counter":"1","SLR":"1","Category":"2","Subglcode":"0","Accno":"9001","SType":"0","PL":"0","RecsrNo":"1","IR":"0","AR":"126000","AvAmt":"0"}
+STATUS: SUCCESS
+RECORDS AFFECTED/RETURNED: 1
+--------------------------------------------------
+[2026-04-28T11:38:19.066Z] EXEC ISP_GSecuTransaction
+PARAMS: {"ID":"528","MID":"12","EntryDate":"2026-04-28T11:38:18.821Z","Flag":"Purchase","BRCD":"1","Counter":"1","SLR":"1","Category":"2","Subglcode":"0","Accno":"9001","SType":"0","PL":"0","RecsrNo":"1","IR":"0","AR":"189000","AvAmt":"0"}
+STATUS: SUCCESS
+RECORDS AFFECTED/RETURNED: 1
+--------------------------------------------------
+[2026-04-29T04:17:22.245Z] EXEC ISP_GSecuTransaction
+PARAMS: {"ID":"529","MID":"12","EntryDate":"2026-04-29T04:17:19.979Z","Flag":"Purchase","BRCD":"1","Counter":"1","SLR":"1","Category":"2","Subglcode":"416","Accno":"9001","SType":"416","PL":"0","RecsrNo":"1","IR":"0","AR":"0","AvAmt":"0"}
+STATUS: SUCCESS
+RECORDS AFFECTED/RETURNED: 1
+--------------------------------------------------
