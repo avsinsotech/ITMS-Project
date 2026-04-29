@@ -214,6 +214,7 @@ const navSections = [
             title: 'Valuation & Compliance',
             items: [
               { id: 'gsec_val_mtm', text: 'MTM Valuation' },
+              { id: 'gsec_val_amortization', text: 'Amortization' },
               { id: 'gsec_val_idr_ifr', text: 'IDR / IFR Movement' },
               { id: 'gsec_val_slr', text: 'SLR & Form VIII' },
               { id: 'gsec_val_repo', text: 'Repo / Reverse Repo' },

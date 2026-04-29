@@ -29,10 +29,12 @@ const bondRoutes = require('./routes/bondRoutes');
 const callMoneyRoutes = require('./routes/callMoneyRoutes');
 const authRoutes = require('./routes/authRoutes');
 const reportRoutes = require('./routes/reportRoutes');
+const gsecRoutes = require('./routes/gsecRoutes');
 
 // Mutual Fund Master Routes
 const amcRoutes = require('./routes/Amcroutes');
 const schemeRoutes = require('./routes/Schemeroutes');
+const shiftingRoutes = require('./routes/shiftingRoutes');
 const distributorRoutes = require('./routes/Distributorroutes');
 
 const app = express();
@@ -59,7 +61,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/amc', amcRoutes);
 app.use('/api/scheme', schemeRoutes);
 app.use('/api/distributor', distributorRoutes);
+app.use('/api/shifting', shiftingRoutes);
 app.use('/api/reports', reportRoutes);
+app.use('/api/gsec', gsecRoutes);
 
 // Swagger Documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));

@@ -44,6 +44,8 @@ import TermDepositCalc from './components/screens/TermDepositCalc';
 import BalanceRegister from './components/screens/BalanceRegister';
 import InvestmentRegister from './components/screens/InvestmentRegister';
 import InvestmentMaturity from './components/screens/InvestmentMaturity';
+import GSecMTMValuation from './components/screens/GSecMTMValuation';
+import GSecAmortization from './components/screens/GSecAmortization';
 
 // in renderScreen():
 
@@ -208,6 +210,8 @@ case 'fd_report_maturity': return <InvestmentMaturity {...props} />;
       //case 'bond_view':      return <BondView onNavigate={navigate} params={screenParams} />;
       case 'bond_view': return <BondView {...props} />;
       case 'gsec_portfolio_holding': return <HoldingRegister {...props} />;
+      case 'gsec_val_mtm': return <GSecMTMValuation {...props} />;
+      case 'gsec_val_amortization': return <GSecAmortization {...props} />;
      
      
       default: return <Dashboard {...props} />;

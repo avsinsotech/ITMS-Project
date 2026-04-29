@@ -133,3 +133,20 @@ export const getSecuritiesByProdCode = async (prodCode) => {
     }
     return response.json();
 };
+
+/**
+ * Execute Classification and Shift process
+ * @param {Object} data - { id, marketPrice, marketValue, classification }
+ */
+export const executeShiftingProcess = async (data) => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/shifting/process`, {
+        method: 'POST',
+        headers: getAuthHeaders(),
+        body: JSON.stringify(data)
+    });
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Failed to execute shifting process');
+    }
+    return response.json();
+};
