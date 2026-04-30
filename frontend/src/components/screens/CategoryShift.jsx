@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Send, Home, ChevronRight, Search, Loader2 } from 'lucide-react';
+<<<<<<< HEAD
 import { getSecuritiesByProdCode, executeShiftingProcess } from '../../services/api';
 
 // Styles moved outside component to prevent re-mounting and focus loss
@@ -29,6 +30,13 @@ const Empty = () => <><div style={cellStyle}></div><div style={cellStyle}></div>
 export default function CategoryShift() {
   const [form, setForm] = useState({
     id: '', secType: '', prodCode: '', tradeType: '', memberNo: '', memberName: '',
+=======
+import { getSecuritiesByProdCode } from '../../services/api';
+
+export default function CategoryShift() {
+  const [form, setForm] = useState({
+    secType: '', prodCode: '', tradeType: '', memberNo: '', memberName: '',
+>>>>>>> my-code-backup
     users: '', userName: '', market: '', subMarket: '', orderNo: '',
     tradeDate: '', tradeTime: '', tradeNumber: '', settlementType: '',
     settlementDate: '', isin: '', genspec: '', security: '', maturityDate: '',
@@ -49,13 +57,17 @@ export default function CategoryShift() {
   const [gridError, setGridError] = useState('');
   const [gridSearch, setGridSearch] = useState('');
   const [lastSearchedProd, setLastSearchedProd] = useState('');
+<<<<<<< HEAD
   const [submitting, setSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState(null);
+=======
+>>>>>>> my-code-backup
 
   const gridRef = useRef(null);
 
   const h = (e) => {
     const { name, value, type, checked } = e.target;
+<<<<<<< HEAD
     const finalValue = type === 'checkbox' ? checked : value;
     
     setForm(p => {
@@ -74,6 +86,9 @@ export default function CategoryShift() {
       
       return updated;
     });
+=======
+    setForm(p => ({ ...p, [name]: type === 'checkbox' ? checked : value }));
+>>>>>>> my-code-backup
   };
 
   // Fetch securities when ProdCode is entered
@@ -122,7 +137,10 @@ export default function CategoryShift() {
   const handleSelectRow = (row) => {
     setForm(p => ({
       ...p,
+<<<<<<< HEAD
       id: row.ID || row.id || '',
+=======
+>>>>>>> my-code-backup
       secType: row.I_Type || '',
       tradeType: row.Trade_Type || '',
       memberNo: row.Member_Number || '',
@@ -160,7 +178,11 @@ export default function CategoryShift() {
       counterType: row.CounterParty || '',
       holdingPositions: row.FACE_VALUE?.toString() || '',
       faceValue: row.FACE_VALUE?.toString() || '',
+<<<<<<< HEAD
       category: row.CATEGORIES || row.Category || row.Portfolio || '',
+=======
+      category: row.CATEGORIES || row.Category || '',
+>>>>>>> my-code-backup
       averageAmt: row.PURCHASE_AMOUNT?.toString() || '',
       accruedInt: row.Accrued_Interest?.toString() || '',
       slr: row.SLRType || '',
@@ -170,11 +192,19 @@ export default function CategoryShift() {
       bookValue: row.BOOK_VALUE?.toString() || '',
       marketPrice: '',
       newValue: '',
+<<<<<<< HEAD
       shiftCategory: row.CATEGORIES || row.Category || row.Portfolio || '',
       changeCategory: '',
       shiftProfitLoss: '',
       shiftAccNo: row.ACCNO?.toString() || '',
       shiftRecSrNo: row.RECSRNO?.toString() || row.RecSrno?.toString() || ''
+=======
+      shiftCategory: '',
+      changeCategory: '',
+      shiftProfitLoss: '',
+      shiftAccNo: '',
+      shiftRecSrNo: ''
+>>>>>>> my-code-backup
     }));
     // Scroll back to form top
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -189,6 +219,7 @@ export default function CategoryShift() {
     );
   });
 
+<<<<<<< HEAD
   const handleSubmit = async () => {
     if (!form.id) {
       setSubmitMessage({ type: 'error', text: 'Please select a record from the grid first.' });
@@ -220,6 +251,32 @@ export default function CategoryShift() {
       setSubmitting(false);
     }
   };
+=======
+  // Styles
+  const formGrid = {
+    display: 'grid',
+    gridTemplateColumns: '150px 200px 150px 200px 140px 200px',
+    gap: '0', alignItems: 'center'
+  };
+  const labelStyle = {
+    fontSize: '11px', fontWeight: 600, color: 'var(--navy)',
+    textAlign: 'right', padding: '6px 8px 6px 4px', whiteSpace: 'nowrap'
+  };
+  const cellStyle = { padding: '4px 6px' };
+  const inputStyle = {
+    width: '100%', padding: '5px 8px', fontSize: '11px',
+    border: '1px solid var(--border)', borderRadius: '4px',
+    background: 'var(--gray-50)', color: 'var(--navy)', boxSizing: 'border-box'
+  };
+  const selectStyle = { ...inputStyle, appearance: 'auto' };
+  const pinkStyle = { ...inputStyle, background: '#ffe0e0' };
+  const yellowStyle = { ...inputStyle, background: '#fff3cd' };
+  const thStyle = { padding: '6px 8px', textAlign: 'left', fontSize: '11px', whiteSpace: 'nowrap' };
+
+  const L = ({ children }) => <div style={labelStyle}>{children}</div>;
+  const C = ({ children, col }) => <div style={{ ...cellStyle, gridColumn: col || 'auto' }}>{children}</div>;
+  const Empty = () => <><div style={cellStyle}></div><div style={cellStyle}></div></>;
+>>>>>>> my-code-backup
 
   return (
     <div>
@@ -245,7 +302,11 @@ export default function CategoryShift() {
           <L>Sec Type*</L>
           <C><select style={selectStyle} name="secType" value={form.secType} onChange={h}>
             <option value="">--Select--</option>
+<<<<<<< HEAD
             <option>Central Goverment Sec</option><option>State Goverment Sec</option>
+=======
+            <option>Central Govt Sec</option><option>State Goverment Sec</option><option>T-Bill</option>
+>>>>>>> my-code-backup
           </select></C>
           <L>ProdCode*</L>
           <C>
@@ -263,30 +324,51 @@ export default function CategoryShift() {
 
           {/* Row 2 */}
           <L>Trade_Type*</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="tradeType" value={form.tradeType} onChange={h} disabled /></C>
+=======
+          <C><input style={inputStyle} name="tradeType" value={form.tradeType} onChange={h} /></C>
+>>>>>>> my-code-backup
           <Empty /><Empty />
 
           {/* Row 3 */}
           <L>Member*</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="memberNo" value={form.memberNo} onChange={h} placeholder="Member No" disabled /></C>
           <C col="3 / 5"><input style={inputStyle} name="memberName" value={form.memberName} onChange={h} placeholder="member Name" disabled /></C>
+=======
+          <C><input style={inputStyle} name="memberNo" value={form.memberNo} onChange={h} placeholder="Member No" /></C>
+          <C col="3 / 5"><input style={inputStyle} name="memberName" value={form.memberName} onChange={h} placeholder="member Name" /></C>
+>>>>>>> my-code-backup
           <Empty />
 
           {/* Row 4 */}
           <L>Users*</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="users" value={form.users} onChange={h} disabled /></C>
           <C col="3 / 5"><input style={inputStyle} name="userName" value={form.userName} onChange={h} placeholder="UserName" disabled /></C>
+=======
+          <C><input style={inputStyle} name="users" value={form.users} onChange={h} /></C>
+          <C col="3 / 5"><input style={inputStyle} name="userName" value={form.userName} onChange={h} placeholder="UserName" /></C>
+>>>>>>> my-code-backup
           <Empty />
 
           {/* Row 5 */}
           <L>Market*</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="market" value={form.market} onChange={h} disabled /></C>
           <L>SubMarket*</L>
           <C><input style={inputStyle} name="subMarket" value={form.subMarket} onChange={h} disabled /></C>
+=======
+          <C><input style={inputStyle} name="market" value={form.market} onChange={h} /></C>
+          <L>SubMarket*</L>
+          <C><input style={inputStyle} name="subMarket" value={form.subMarket} onChange={h} /></C>
+>>>>>>> my-code-backup
           <Empty />
 
           {/* Row 6 */}
           <L>Order No*</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="orderNo" value={form.orderNo} onChange={h} disabled /></C>
           <L>Trade_Date*</L>
           <C><input style={inputStyle} name="tradeDate" value={form.tradeDate} onChange={h} disabled /></C>
@@ -296,31 +378,61 @@ export default function CategoryShift() {
           {/* Row 7 */}
           <L>Trade_Number*</L>
           <C><input style={inputStyle} name="tradeNumber" value={form.tradeNumber} onChange={h} disabled /></C>
+=======
+          <C><input style={inputStyle} name="orderNo" value={form.orderNo} onChange={h} /></C>
+          <L>Trade_Date*</L>
+          <C><input style={inputStyle} name="tradeDate" value={form.tradeDate} onChange={h} /></C>
+          <L>Trade_Time</L>
+          <C><input style={inputStyle} name="tradeTime" value={form.tradeTime} onChange={h} /></C>
+
+          {/* Row 7 */}
+          <L>Trade_Number*</L>
+          <C><input style={inputStyle} name="tradeNumber" value={form.tradeNumber} onChange={h} /></C>
+>>>>>>> my-code-backup
           <Empty /><Empty />
 
           {/* Row 8 */}
           <L>Settlement_Type*</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="settlementType" value={form.settlementType} onChange={h} disabled /></C>
           <L>Settlement_Date*</L>
           <C><input style={inputStyle} name="settlementDate" value={form.settlementDate} onChange={h} type="date" disabled /></C>
+=======
+          <C><input style={inputStyle} name="settlementType" value={form.settlementType} onChange={h} /></C>
+          <L>Settlement_Date*</L>
+          <C><input style={inputStyle} name="settlementDate" value={form.settlementDate} onChange={h} type="date" /></C>
+>>>>>>> my-code-backup
           <Empty />
 
           {/* Row 9 */}
           <L>ISIN*</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="isin" value={form.isin} onChange={h} disabled /></C>
           <L>Genspec*</L>
           <C><input style={inputStyle} name="genspec" value={form.genspec} onChange={h} disabled /></C>
+=======
+          <C><input style={inputStyle} name="isin" value={form.isin} onChange={h} /></C>
+          <L>Genspec*</L>
+          <C><input style={inputStyle} name="genspec" value={form.genspec} onChange={h} /></C>
+>>>>>>> my-code-backup
           <Empty />
 
           {/* Row 10 */}
           <L>Security*</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="security" value={form.security} onChange={h} disabled /></C>
           <L>Maturity_Date*</L>
           <C><input style={inputStyle} name="maturityDate" value={form.maturityDate} onChange={h} disabled /></C>
+=======
+          <C><input style={inputStyle} name="security" value={form.security} onChange={h} /></C>
+          <L>Maturity_Date*</L>
+          <C><input style={inputStyle} name="maturityDate" value={form.maturityDate} onChange={h} /></C>
+>>>>>>> my-code-backup
           <Empty />
 
           {/* Row 11 */}
           <L>Amount*</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="amount" value={form.amount} onChange={h} disabled /></C>
           <L>Trade_Price*</L>
           <C><input style={inputStyle} name="tradePrice" value={form.tradePrice} onChange={h} disabled /></C>
@@ -332,17 +444,37 @@ export default function CategoryShift() {
           <C><input style={inputStyle} name="tradeYield" value={form.tradeYield} onChange={h} disabled /></C>
           <L>Trade_Amount*</L>
           <C><input style={inputStyle} name="tradeAmount" value={form.tradeAmount} onChange={h} disabled /></C>
+=======
+          <C><input style={inputStyle} name="amount" value={form.amount} onChange={h} /></C>
+          <L>Trade_Price*</L>
+          <C><input style={inputStyle} name="tradePrice" value={form.tradePrice} onChange={h} /></C>
+          <L>Trade_Rate*</L>
+          <C><input style={inputStyle} name="tradeRate" value={form.tradeRate} onChange={h} /></C>
+
+          {/* Row 12 */}
+          <L>Trade_Yield*</L>
+          <C><input style={inputStyle} name="tradeYield" value={form.tradeYield} onChange={h} /></C>
+          <L>Trade_Amount*</L>
+          <C><input style={inputStyle} name="tradeAmount" value={form.tradeAmount} onChange={h} /></C>
+>>>>>>> my-code-backup
           <Empty />
 
           {/* Row 13 */}
           <L>LastIntDate*</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="lastIntDate" value={form.lastIntDate} onChange={h} type="date" disabled /></C>
           <L>Period*</L>
           <C><input style={inputStyle} name="period" value={form.period} onChange={h} disabled /></C>
+=======
+          <C><input style={inputStyle} name="lastIntDate" value={form.lastIntDate} onChange={h} type="date" /></C>
+          <L>Period*</L>
+          <C><input style={inputStyle} name="period" value={form.period} onChange={h} /></C>
+>>>>>>> my-code-backup
           <Empty />
 
           {/* Row 14 */}
           <L>Accrued_Interest*</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="accruedInterest" value={form.accruedInterest} onChange={h} disabled /></C>
           <L>Sett_Consideration*</L>
           <C><input style={inputStyle} name="settConsideration" value={form.settConsideration} onChange={h} disabled /></C>
@@ -360,13 +492,38 @@ export default function CategoryShift() {
           {/* Row 16 */}
           <L>Portfolio*</L>
           <C><input style={inputStyle} name="portfolio" value={form.portfolio} onChange={h} disabled /></C>
+=======
+          <C><input style={inputStyle} name="accruedInterest" value={form.accruedInterest} onChange={h} /></C>
+          <L>Sett_Consideration*</L>
+          <C><input style={inputStyle} name="settConsideration" value={form.settConsideration} onChange={h} /></C>
+          <L>Calculated_Int*</L>
+          <C><input style={inputStyle} name="calculatedInt" value={form.calculatedInt} onChange={h} /></C>
+
+          {/* Row 15 */}
+          <L>Constituent*</L>
+          <C><input style={inputStyle} name="constituent" value={form.constituent} onChange={h} /></C>
+          <L>Constituent_Number*</L>
+          <C><input style={inputStyle} name="constituentNumber" value={form.constituentNumber} onChange={h} /></C>
+          <L>Purchase Book*</L>
+          <C><input style={inputStyle} name="purchaseBook" value={form.purchaseBook} onChange={h} /></C>
+
+          {/* Row 16 */}
+          <L>Portfolio*</L>
+          <C><input style={inputStyle} name="portfolio" value={form.portfolio} onChange={h} /></C>
+>>>>>>> my-code-backup
           <Empty /><Empty />
 
           {/* Row 17 */}
           <L>AccNo*</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="accNo" value={form.accNo} onChange={h} disabled /></C>
           <L>Rec SrNo*</L>
           <C><input style={inputStyle} name="recSrNo" value={form.recSrNo} onChange={h} disabled /></C>
+=======
+          <C><input style={inputStyle} name="accNo" value={form.accNo} onChange={h} /></C>
+          <L>Rec SrNo*</L>
+          <C><input style={inputStyle} name="recSrNo" value={form.recSrNo} onChange={h} /></C>
+>>>>>>> my-code-backup
           <C col="5 / 7">
             <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '11px', color: 'var(--navy)', cursor: 'pointer' }}>
               <input type="radio" name="mergeAll" checked={form.mergeAll} onChange={() => setForm(p => ({...p, mergeAll: !p.mergeAll}))} /> Merge All
@@ -375,11 +532,16 @@ export default function CategoryShift() {
 
           {/* Row 18 */}
           <L>Counter Type*</L>
+<<<<<<< HEAD
           <C><select style={selectStyle} name="counterType" disabled value={form.counterType} onChange={h}>
+=======
+          <C><select style={selectStyle} name="counterType" value={form.counterType} onChange={h}>
+>>>>>>> my-code-backup
             <option value="">--Select--</option>
             <option>CounterParty1</option><option>NDS-OM</option>
           </select></C>
           <L>Holding Positions*</L>
+<<<<<<< HEAD
           <C><input style={pinkStyle} name="holdingPositions" value={form.holdingPositions} onChange={h} disabled /></C>
           <L>Face Value*</L>
           <C><input style={inputStyle} name="faceValue" value={form.faceValue} onChange={h} disabled /></C>
@@ -387,10 +549,20 @@ export default function CategoryShift() {
           {/* Row 19 */}
           <L>Category*</L>
           <C><select style={selectStyle} name="category" disabled value={form.category} onChange={h}>
+=======
+          <C><input style={pinkStyle} name="holdingPositions" value={form.holdingPositions} onChange={h} /></C>
+          <L>Face Value*</L>
+          <C><input style={inputStyle} name="faceValue" value={form.faceValue} onChange={h} /></C>
+
+          {/* Row 19 */}
+          <L>Category*</L>
+          <C><select style={selectStyle} name="category" value={form.category} onChange={h}>
+>>>>>>> my-code-backup
             <option value="">--Select--</option>
             <option>AFS</option><option>HTM</option><option>HFT</option>
           </select></C>
           <L>Average Amt*</L>
+<<<<<<< HEAD
           <C><input style={pinkStyle} name="averageAmt" value={form.averageAmt} onChange={h} disabled /></C>
           <L>Accrued Int*</L>
           <C><input style={inputStyle} name="accruedInt" value={form.accruedInt} onChange={h} disabled /></C>
@@ -398,13 +570,28 @@ export default function CategoryShift() {
           {/* Row 20 */}
           <L>SLR*</L>
           <C><select style={selectStyle} name="slr" disabled value={form.slr} onChange={h}>
+=======
+          <C><input style={pinkStyle} name="averageAmt" value={form.averageAmt} onChange={h} /></C>
+          <L>Accrued Int*</L>
+          <C><input style={inputStyle} name="accruedInt" value={form.accruedInt} onChange={h} /></C>
+
+          {/* Row 20 */}
+          <L>SLR*</L>
+          <C><select style={selectStyle} name="slr" value={form.slr} onChange={h}>
+>>>>>>> my-code-backup
             <option value="">--Select--</option>
             <option>SLR</option><option>Non SLR</option>
           </select></C>
           <L>Profit / Loss Int*</L>
+<<<<<<< HEAD
           <C><input style={pinkStyle} name="profitLossInt" value={form.profitLossInt} onChange={h} disabled /></C>
           <L>Rec. Int*</L>
           <C><input style={inputStyle} name="recInt" value={form.recInt} onChange={h} disabled /></C>
+=======
+          <C><input style={pinkStyle} name="profitLossInt" value={form.profitLossInt} onChange={h} /></C>
+          <L>Rec. Int*</L>
+          <C><input style={inputStyle} name="recInt" value={form.recInt} onChange={h} /></C>
+>>>>>>> my-code-backup
         </div>
       </div>
 
@@ -415,7 +602,11 @@ export default function CategoryShift() {
         </div>
         <div style={{ ...formGrid, padding: '6px 2px' }}>
           <L>Category*</L>
+<<<<<<< HEAD
           <C><select style={selectStyle} name="shiftCategory" disabled value={form.shiftCategory} onChange={h}>
+=======
+          <C><select style={selectStyle} name="shiftCategory" value={form.shiftCategory} onChange={h}>
+>>>>>>> my-code-backup
             <option value="">--Select--</option>
             <option>AFS</option><option>HTM</option><option>HFT</option>
           </select></C>
@@ -427,25 +618,38 @@ export default function CategoryShift() {
           <Empty />
 
           <L>Book Price</L>
+<<<<<<< HEAD
           <C><input style={inputStyle} name="bookPrice" value={form.bookPrice} onChange={h} disabled /></C>
+=======
+          <C><input style={inputStyle} name="bookPrice" value={form.bookPrice} onChange={h} /></C>
+>>>>>>> my-code-backup
           <L>Market Price</L>
           <C><input style={inputStyle} name="marketPrice" value={form.marketPrice} onChange={h} /></C>
           <Empty />
 
           <L>Book Value</L>
+<<<<<<< HEAD
           <C><input style={yellowStyle} name="bookValue" value={form.bookValue} onChange={h} disabled /></C>
+=======
+          <C><input style={yellowStyle} name="bookValue" value={form.bookValue} onChange={h} /></C>
+>>>>>>> my-code-backup
           <L>New Value</L>
           <C><input style={inputStyle} name="newValue" value={form.newValue} onChange={h} /></C>
           <Empty />
 
           <L>Profit/Loss Int</L>
+<<<<<<< HEAD
           <C><input style={yellowStyle} name="shiftProfitLoss" value={form.shiftProfitLoss} onChange={h} disabled /></C>
+=======
+          <C><input style={yellowStyle} name="shiftProfitLoss" value={form.shiftProfitLoss} onChange={h} /></C>
+>>>>>>> my-code-backup
           <L>Acc No</L>
           <C><input style={inputStyle} name="shiftAccNo" value={form.shiftAccNo} onChange={h} /></C>
           <L>RecSrNo</L>
           <C><input style={inputStyle} name="shiftRecSrNo" value={form.shiftRecSrNo} onChange={h} /></C>
         </div>
 
+<<<<<<< HEAD
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '14px', borderTop: '1px solid #e8ecf0' }}>
           {submitMessage && (
             <div style={{
@@ -468,6 +672,11 @@ export default function CategoryShift() {
             ) : (
               <><Send size={13} style={{ marginRight: '6px' }} /> Submit</>
             )}
+=======
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '14px', borderTop: '1px solid #e8ecf0' }}>
+          <button className="topbar-btn btn-gold" style={{ padding: '8px 32px', fontWeight: 700, fontSize: '12px' }}>
+            <Send size={13} style={{ marginRight: '6px' }} /> Submit
+>>>>>>> my-code-backup
           </button>
         </div>
       </div>
@@ -555,6 +764,7 @@ export default function CategoryShift() {
       <div style={{ marginTop: '30px', textAlign: 'center', color: 'var(--gray-400)', fontSize: '10px' }}>
         AVS InSoTech Private Limited | Investment & Treasury Management System — G-Sec Module v1.0 | © 2026
       </div>
+<<<<<<< HEAD
 
       <style>{`
         /* Remove harsh browser focus outline and replace with subtle glow */
@@ -565,6 +775,8 @@ export default function CategoryShift() {
           background: #fff !important;
         }
       `}</style>
+=======
+>>>>>>> my-code-backup
     </div>
   );
 }

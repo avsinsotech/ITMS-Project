@@ -24,19 +24,36 @@ const swaggerSpecs = require('./config/swagger');
 
 // Core Routes
 const purchaseRoutes = require('./routes/purchaseRoutes');
+<<<<<<< HEAD
 const fdRoutes = require('./routes/fdRoutes');  
 const bondRoutes = require('./routes/bondRoutes');  
 const callMoneyRoutes = require('./routes/callMoneyRoutes');
 const authRoutes = require('./routes/authRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const gsecRoutes = require('./routes/gsecRoutes');
+=======
+
+const callMoneyRoutes = require('./routes/callMoneyRoutes');
+const authRoutes = require('./routes/authRoutes');
+const reportRoutes = require('./routes/reportRoutes');
+>>>>>>> my-code-backup
 
 // Mutual Fund Master Routes
 const amcRoutes = require('./routes/Amcroutes');
 const schemeRoutes = require('./routes/Schemeroutes');
+<<<<<<< HEAD
 const shiftingRoutes = require('./routes/shiftingRoutes');
 const distributorRoutes = require('./routes/Distributorroutes');
 
+=======
+const distributorRoutes = require('./routes/Distributorroutes');
+
+// ── New: Investment Master (Term Deposit Add New / Add Existing) ─────────────
+const investmentMasterRoutes = require('./routes/investmentMasterRoutes');
+
+const termDepositRoutes = require('./routes/termDepositRoutes');
+
+>>>>>>> my-code-backup
 const app = express();
 
 // Middleware
@@ -52,8 +69,13 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes Registration
 app.use('/api/purchase', purchaseRoutes);
+<<<<<<< HEAD
 app.use('/api/fd', fdRoutes);          
 app.use('/api/bond', bondRoutes); 
+=======
+        
+
+>>>>>>> my-code-backup
 app.use('/api/call-money', callMoneyRoutes);
 app.use('/api/auth', authRoutes);
 
@@ -61,9 +83,18 @@ app.use('/api/auth', authRoutes);
 app.use('/api/amc', amcRoutes);
 app.use('/api/scheme', schemeRoutes);
 app.use('/api/distributor', distributorRoutes);
+<<<<<<< HEAD
 app.use('/api/shifting', shiftingRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/gsec', gsecRoutes);
+=======
+app.use('/api/reports', reportRoutes);
+
+// Investment Master — Term Deposit Add New / Add Existing
+app.use('/api/investment-master',  investmentMasterRoutes);
+
+app.use('/api/term-deposit', termDepositRoutes);
+>>>>>>> my-code-backup
 
 // Swagger Documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));

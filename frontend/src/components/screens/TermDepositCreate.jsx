@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 // // // import { useState, useEffect, useRef } from 'react';
 
@@ -2374,6 +2375,8 @@
 //     </>
 //   );
 // }
+=======
+>>>>>>> my-code-backup
 import { useState, useEffect, useRef } from 'react';
 
 const API_BASE = 'http://localhost:8020/api/investment-master';
@@ -2401,7 +2404,10 @@ const EMPTY_FORM = {
   irCustName:       '',
 };
 
+<<<<<<< HEAD
 // Stage constants
+=======
+>>>>>>> my-code-backup
 const STAGE = {
   ADD_NEW:   1001,
   MODIFY:    1002,
@@ -2409,12 +2415,63 @@ const STAGE = {
   DELETE:    1004,
 };
 
+<<<<<<< HEAD
 // ── Sample grid data (replace with API fetch in production) ──
 const SAMPLE_RECORDS = [
   { subglCode: '56001', bankName: 'SBI',   acNo: '1', receiptNo: '1', name: '2563/52',    openingDate: '04/06/2024', bankCode: 0, branchName: '', branchCode: 0, receiptName: '2563/52',    boardResNo: '', boardMeetingDate: '', investmentType: 'INV', icProdCode: '', icProdName: '', irProdCode: '', irProdName: '', irAccNum: '1', irCustName: '', stage: 1001 },
   { subglCode: '56002', bankName: 'SDFGH', acNo: '1', receiptNo: '1', name: 'GHHH',       openingDate: '04/06/2024', bankCode: 0, branchName: '', branchCode: 0, receiptName: 'GHHH',       boardResNo: '', boardMeetingDate: '', investmentType: 'INV', icProdCode: '', icProdName: '', irProdCode: '', irProdName: '', irAccNum: '1', irCustName: '', stage: 1001 },
   { subglCode: '56003', bankName: 'BOI',   acNo: '1', receiptNo: '1', name: 'RECIEPTBOI', openingDate: '04/06/2024', bankCode: 0, branchName: '', branchCode: 0, receiptName: 'RECIEPTBOI', boardResNo: '', boardMeetingDate: '', investmentType: 'INV', icProdCode: '', icProdName: '', irProdCode: '', irProdName: '', irAccNum: '1', irCustName: '', stage: 1002 },
 ];
+=======
+// ── Format ISO datetime → "yyyy-MM-dd" for <input type="date"> ──
+function toDateInput(val) {
+  if (!val) return '';
+  const d = new Date(val);
+  if (isNaN(d)) return val;
+  return d.toISOString().slice(0, 10);
+}
+
+// ── Format ISO datetime → "DD/MM/YYYY" for grid display ──
+function toDisplayDate(val) {
+  if (!val) return '';
+  const d = new Date(val);
+  if (isNaN(d)) return val;
+  const dd = String(d.getDate()).padStart(2, '0');
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  return `${dd}/${mm}/${d.getFullYear()}`;
+}
+
+// ── Map raw API row → internal grid/form shape ──
+function mapApiRecord(row) {
+  return {
+    id:               row.ID,
+    subglCode:        String(row.SubGlCode ?? ''),
+    bankName:         row.BankName   ?? '',
+    branchName:       row.Branchname ?? '',
+    bankCode:         0,
+    branchCode:       0,
+    acNo:             String(row.CustAccno ?? '1'),
+    receiptNo:        String(row.ReceiptNo ?? ''),
+    receiptName:      row.ReceiptName ?? '',
+    name:             row.ReceiptName || row.ProdName || '',
+    openingDate:      toDisplayDate(row.OpeningDate),
+    openingDateRaw:   toDateInput(row.OpeningDate),
+    boardResNo:       row.BoardResNo   ? String(row.BoardResNo) : '',
+    boardMeetingDate: toDateInput(row.BoardMeetDate),
+    investmentType:   row.GlGroup     ?? 'INV',
+    productCode:      String(row.SubGlCode ?? ''),
+    productName:      row.ProdName    ?? '',
+    icProdCode:       row.CRGL        ?? '',
+    icProdName:       '',
+    irProdCode:       row.RecGL       ?? '',
+    irProdName:       '',
+    irAccNum:         row.RecAC       ?? '1',
+    irCustName:       row.PRACCNAME   ?? '',
+    stage:            row.Stage,
+    brcd:             row.BRCD,
+  };
+}
+>>>>>>> my-code-backup
 
 const css = `
   .im-wrap * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -2486,6 +2543,7 @@ const css = `
     padding: 5px 22px; font-size: 12.5px; font-weight: 600;
     border-radius: 3px; border: none; cursor: pointer; font-family: inherit;
   }
+<<<<<<< HEAD
   .im-btn-blue   { background: #1565c0; color: #fff; }
   .im-btn-blue:hover   { background: #0d47a1; }
   .im-btn-green  { background: #2e7d32; color: #fff; }
@@ -2496,6 +2554,16 @@ const css = `
   .im-btn-red:hover    { background: #b71c1c; }
   .im-btn-amber  { background: #f57c00; color: #fff; }
   .im-btn-amber:hover  { background: #e65100; }
+=======
+  .im-btn-blue  { background: #1565c0; color: #fff; }
+  .im-btn-blue:hover  { background: #0d47a1; }
+  .im-btn-green { background: #2e7d32; color: #fff; }
+  .im-btn-green:hover { background: #1b5e20; }
+  .im-btn-grey  { background: #d0d8e4; color: #333; }
+  .im-btn-grey:hover  { background: #b8c4d4; }
+  .im-btn-red   { background: #e53935; color: #fff; }
+  .im-btn-red:hover   { background: #b71c1c; }
+>>>>>>> my-code-backup
   .im-btn:disabled { opacity: 0.6; cursor: not-allowed; }
   .im-dropdown {
     position: absolute; top: 100%; left: 0; right: 0; z-index: 999;
@@ -2517,7 +2585,10 @@ const css = `
   .im-status.success { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
   .im-status.loading { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
 
+<<<<<<< HEAD
   /* ── Stage badge ── */
+=======
+>>>>>>> my-code-backup
   .im-stage-badge {
     display: inline-block; padding: 1px 7px; border-radius: 10px;
     font-size: 10px; font-weight: 700; letter-spacing: 0.3px;
@@ -2527,10 +2598,20 @@ const css = `
   .stage-1003 { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
   .stage-1004 { background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
 
+<<<<<<< HEAD
   /* ── Grid ── */
   .im-grid-wrap {
     margin: 0 8px 8px; border: 1px solid #b0c4de; border-radius: 2px; overflow: hidden;
   }
+=======
+  .im-grid-wrap {
+    margin: 0 8px 8px; border: 1px solid #b0c4de; border-radius: 2px; overflow: hidden;
+  }
+  .im-grid-loading {
+    padding: 20px; text-align: center; color: #1565c0;
+    font-size: 12px; background: #f3f6fb;
+  }
+>>>>>>> my-code-backup
   table.im-grid { width: 100%; border-collapse: collapse; font-size: 12px; }
   table.im-grid thead tr { background: #1565c0; }
   table.im-grid thead th {
@@ -2541,11 +2622,19 @@ const css = `
   table.im-grid tbody tr { border-bottom: 1px solid #eef1f8; }
   table.im-grid tbody tr:nth-child(even) { background: #f3f6fb; }
   table.im-grid tbody tr:nth-child(odd)  { background: #fff; }
+<<<<<<< HEAD
   table.im-grid tbody tr.im-grid-sel     { background: #dce8f5 !important; outline: 1px solid #1565c0; }
   table.im-grid tbody tr.im-grid-sel-red { background: #ffebee !important; outline: 1px solid #e53935; }
   table.im-grid tbody tr.im-grid-sel-green { background: #e8f5e9 !important; outline: 1px solid #2e7d32; }
   table.im-grid tbody tr.im-grid-sel-teal { background: #e0f2f1 !important; outline: 1px solid #00695c; }
   table.im-grid tbody tr:hover           { background: #eaf1fb !important; cursor: pointer; }
+=======
+  table.im-grid tbody tr.im-grid-sel       { background: #dce8f5 !important; outline: 1px solid #1565c0; }
+  table.im-grid tbody tr.im-grid-sel-red   { background: #ffebee !important; outline: 1px solid #e53935; }
+  table.im-grid tbody tr.im-grid-sel-green { background: #e8f5e9 !important; outline: 1px solid #2e7d32; }
+  table.im-grid tbody tr.im-grid-sel-teal  { background: #e0f2f1 !important; outline: 1px solid #00695c; }
+  table.im-grid tbody tr:hover             { background: #eaf1fb !important; cursor: pointer; }
+>>>>>>> my-code-backup
   table.im-grid tbody td { padding: 5px 10px; color: #222; }
   table.im-grid tbody td.mono { font-family: monospace; font-weight: 700; color: #1565c0; }
 
@@ -2561,7 +2650,11 @@ const css = `
   .im-sel-btn.del.sel      { background: #c62828; color: #fff; border-color: #b71c1c; }
   .im-sel-btn.auth         { background: #e8f5e9; color: #2e7d32; border-color: #a5d6a7; }
   .im-sel-btn.auth.sel     { background: #2e7d32; color: #fff; border-color: #1b5e20; }
+<<<<<<< HEAD
   .im-sel-btn.view-btn     { background: #e0f2f1; color: #00695c; border-color: #80cbc4; }
+=======
+  .im-sel-btn.view-btn     { background: #e0f2f1; color: #00695c; border-border: #80cbc4; }
+>>>>>>> my-code-backup
   .im-sel-btn.view-btn.sel { background: #00695c; color: #fff; border-color: #004d40; }
 
   .im-modify-banner {
@@ -2577,7 +2670,10 @@ const css = `
   .im-banner-teal    { background: #e0f2f1; color: #00695c; border-color: #80cbc4; }
 `;
 
+<<<<<<< HEAD
 // ── Stage label helper ──────────────────────────────────────────────────────
+=======
+>>>>>>> my-code-backup
 function StageBadge({ stage }) {
   const map = {
     1001: { label: 'Pending (1001)',    cls: 'stage-1001' },
@@ -2590,8 +2686,11 @@ function StageBadge({ stage }) {
   return <span className={`im-stage-badge ${entry.cls}`}>{entry.label}</span>;
 }
 
+<<<<<<< HEAD
 // ── Sub-components ──────────────────────────────────────────────────────────
 
+=======
+>>>>>>> my-code-backup
 function Row({ label, required, hidden, children }) {
   if (hidden) return null;
   return (
@@ -2690,9 +2789,20 @@ function GLCodeInput({ value, onChange, onFound, className, readOnly }) {
   );
 }
 
+<<<<<<< HEAD
 // ── Shared Grid Component ───────────────────────────────────────────────────
 
 function RecordGrid({ records, selectedRow, onSelect, selBtnClass, selRowClass }) {
+=======
+function RecordGrid({ records, selectedRow, onSelect, selBtnClass, selRowClass, loading }) {
+  if (loading) {
+    return (
+      <div className="im-grid-wrap">
+        <div className="im-grid-loading">⏳ Loading records…</div>
+      </div>
+    );
+  }
+>>>>>>> my-code-backup
   return (
     <div className="im-grid-wrap">
       <table className="im-grid">
@@ -2719,7 +2829,11 @@ function RecordGrid({ records, selectedRow, onSelect, selBtnClass, selRowClass }
             const isSel = selectedRow === i;
             return (
               <tr
+<<<<<<< HEAD
                 key={i}
+=======
+                key={rec.id ?? i}
+>>>>>>> my-code-backup
                 className={isSel ? selRowClass : ''}
                 onClick={() => onSelect(rec, i)}
               >
@@ -2748,15 +2862,23 @@ function RecordGrid({ records, selectedRow, onSelect, selBtnClass, selRowClass }
   );
 }
 
+<<<<<<< HEAD
 // ── Main Component ──────────────────────────────────────────────────────────
 
+=======
+>>>>>>> my-code-backup
 export default function TermDepositCreate({ onNavigate }) {
   const [mode,        setMode]        = useState('add_new');
   const [form,        setForm]        = useState(EMPTY_FORM);
   const [status,      setStatus]      = useState(null);
   const [submitting,  setSubmitting]  = useState(false);
   const [fetching,    setFetching]    = useState(false);
+<<<<<<< HEAD
   const [records,     setRecords]     = useState(SAMPLE_RECORDS);
+=======
+  const [records,     setRecords]     = useState([]);
+  const [gridLoading, setGridLoading] = useState(false);
+>>>>>>> my-code-backup
   const [selectedRow, setSelectedRow] = useState(null);
 
   const isNew      = mode === 'add_new';
@@ -2765,6 +2887,7 @@ export default function TermDepositCreate({ onNavigate }) {
   const isDelete   = mode === 'delete';
   const isAuth     = mode === 'authorise';
   const isView     = mode === 'view';
+<<<<<<< HEAD
 
   // Modes that show grid and load form on row select
   const isGridMode = isModify || isDelete || isAuth || isView;
@@ -2783,6 +2906,51 @@ export default function TermDepositCreate({ onNavigate }) {
   }, [mode]);
 
   // ── Add New: auto-fetch GLCODE (MAX+1) ──
+=======
+  const isGridMode = isModify || isDelete || isAuth || isView;
+  const isReadOnly = isView || isDelete || isAuth;
+
+  // ── Fetch records from API for grid modes ──────────────────────────────────
+  const fetchRecords = async (currentMode) => {
+    setGridLoading(true);
+    setRecords([]);
+    try {
+      // For view/admin: showAll=true; for others: filter by pending stages only
+      const showAll = currentMode === 'view' ? 'true' : 'true'; // show all, filter in UI
+      const res  = await fetch(`${API_BASE}?brcd=1&showAll=${showAll}`);
+      const json = await res.json();
+      if (json.success && Array.isArray(json.data)) {
+        const mapped = json.data.map(mapApiRecord);
+        // For authorise: only show pending/modified (1001, 1002)
+        // For delete: show pending/modified (1001, 1002)
+        // For modify: show pending/modified (1001, 1002)
+        // For view: show all
+        if (currentMode === 'authorise' || currentMode === 'modify' || currentMode === 'delete') {
+          setRecords(mapped.filter(r => r.stage === 1001 || r.stage === 1002));
+        } else {
+          setRecords(mapped);
+        }
+      } else {
+        setStatus({ type: 'error', msg: json.message || 'Failed to load records.' });
+      }
+    } catch (err) {
+      setStatus({ type: 'error', msg: `Could not load records: ${err.message}` });
+    } finally {
+      setGridLoading(false);
+    }
+  };
+
+  // ── Load records when entering a grid-based mode ───────────────────────────
+  useEffect(() => {
+    if (isGridMode) {
+      setSelectedRow(null);
+      setForm(EMPTY_FORM);
+      fetchRecords(mode);
+    }
+  }, [mode]);
+
+  // ── Add New: auto-fetch GLCODE ─────────────────────────────────────────────
+>>>>>>> my-code-backup
   useEffect(() => {
     if (mode !== 'add_new') return;
     setForm(f => ({ ...f, receiptNo: '1', acNo: '1', accNo: '1' }));
@@ -2804,7 +2972,11 @@ export default function TermDepositCreate({ onNavigate }) {
     })();
   }, [mode]);
 
+<<<<<<< HEAD
   // ── Add Existing: fetch GL defaults on GLCODE entry ──
+=======
+  // ── Add Existing: fetch GL defaults on GLCODE entry ───────────────────────
+>>>>>>> my-code-backup
   const fetchExistingDefaults = async (glCode) => {
     if (!glCode || mode !== 'add_existing') return;
     setFetching(true);
@@ -2832,7 +3004,11 @@ export default function TermDepositCreate({ onNavigate }) {
     }
   };
 
+<<<<<<< HEAD
   // ── Select a row in grid → populate form ──
+=======
+  // ── Select a row in grid → populate form ──────────────────────────────────
+>>>>>>> my-code-backup
   const handleGridSelect = (rec, idx) => {
     if (selectedRow === idx) {
       setSelectedRow(null);
@@ -2844,7 +3020,11 @@ export default function TermDepositCreate({ onNavigate }) {
     setForm({
       investmentType:   rec.investmentType   || 'INV',
       productCode:      rec.subglCode        || '',
+<<<<<<< HEAD
       productName:      rec.name             || '',
+=======
+      productName:      rec.productName      || rec.name || '',
+>>>>>>> my-code-backup
       acNo:             rec.acNo             || '1',
       bankName:         rec.bankName         || '',
       bankCode:         rec.bankCode         || 0,
@@ -2852,15 +3032,26 @@ export default function TermDepositCreate({ onNavigate }) {
       branchCode:       rec.branchCode       || 0,
       accNo:            rec.acNo             || '',
       receiptNo:        rec.receiptNo        || '',
+<<<<<<< HEAD
       receiptName:      rec.receiptName      || rec.name || '',
       boardResNo:       rec.boardResNo       || '',
       boardMeetingDate: rec.boardMeetingDate || '',
       openingDate:      rec.openingDate      || '',
+=======
+      receiptName:      rec.receiptName      || '',
+      boardResNo:       rec.boardResNo       || '',
+      boardMeetingDate: rec.boardMeetingDate || '',
+      openingDate:      rec.openingDateRaw   || '',
+>>>>>>> my-code-backup
       icProdCode:       rec.icProdCode       || '',
       icProdName:       rec.icProdName       || '',
       irProdCode:       rec.irProdCode       || '',
       irProdName:       rec.irProdName       || '',
+<<<<<<< HEAD
       irAccNum:         rec.irAccNum         || rec.acNo || '1',
+=======
+      irAccNum:         rec.irAccNum         || '1',
+>>>>>>> my-code-backup
       irCustName:       rec.irCustName       || '',
     });
   };
@@ -2870,37 +3061,62 @@ export default function TermDepositCreate({ onNavigate }) {
     setForm(EMPTY_FORM);
     setStatus(null);
     setSelectedRow(null);
+<<<<<<< HEAD
+=======
+    setRecords([]);
+>>>>>>> my-code-backup
   };
 
   const set  = (field) => (val) => setForm(f => ({ ...f, [field]: val }));
   const setE = (field) => (e)   => set(field)(e.target.value);
 
+<<<<<<< HEAD
   // ── Primary action handler ──
+=======
+  // ── Primary action handler ────────────────────────────────────────────────
+>>>>>>> my-code-backup
   const handlePrimaryAction = async () => {
     if (isGridMode && selectedRow === null)
       return setStatus({ type: 'error', msg: 'Please select a record from the grid first.' });
 
+<<<<<<< HEAD
+=======
+    const selectedRecord = records[selectedRow];
+
+>>>>>>> my-code-backup
     // ── Delete → Stage 1004 ──
     if (isDelete) {
       setStatus({ type: 'loading', msg: 'Deleting record… (Stage → 1004)' });
       setSubmitting(true);
       try {
         const res  = await fetch(`${API_BASE}/delete`, {
+<<<<<<< HEAD
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body:    JSON.stringify({
             glCode: form.productCode,
             brcd:   1,
             stage:  STAGE.DELETE,          // 1004
+=======
+          method:  'DELETE',                              // ← correct HTTP verb
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({
+            glCode: form.productCode,
+            brcd:   selectedRecord?.brcd ?? 1,
+>>>>>>> my-code-backup
           }),
         });
         const json = await res.json();
         if (json.success) {
           setStatus({ type: 'success', msg: `✅ Record GL: ${form.productCode} soft-deleted. Stage set to 1004.` });
+<<<<<<< HEAD
           // Update local record's stage to reflect change
           setRecords(r => r.map((rec, i) =>
             i === selectedRow ? { ...rec, stage: STAGE.DELETE } : rec
           ));
+=======
+          setRecords(r => r.filter((_, i) => i !== selectedRow));
+>>>>>>> my-code-backup
           setSelectedRow(null);
           setForm(EMPTY_FORM);
         } else {
@@ -2924,16 +3140,24 @@ export default function TermDepositCreate({ onNavigate }) {
           headers: { 'Content-Type': 'application/json' },
           body:    JSON.stringify({
             glCode: form.productCode,
+<<<<<<< HEAD
             brcd:   1,
             stage:  STAGE.AUTHORISE,       // 1003
+=======
+            brcd:   selectedRecord?.brcd ?? 1,
+>>>>>>> my-code-backup
           }),
         });
         const json = await res.json();
         if (json.success) {
           setStatus({ type: 'success', msg: `✅ Record GL: ${form.productCode} authorised. Stage set to 1003.` });
+<<<<<<< HEAD
           setRecords(r => r.map((rec, i) =>
             i === selectedRow ? { ...rec, stage: STAGE.AUTHORISE } : rec
           ));
+=======
+          setRecords(r => r.filter((_, i) => i !== selectedRow));
+>>>>>>> my-code-backup
           setSelectedRow(null);
           setForm(EMPTY_FORM);
         } else {
@@ -2947,15 +3171,22 @@ export default function TermDepositCreate({ onNavigate }) {
       return;
     }
 
+<<<<<<< HEAD
     // ── Add New / Add Existing / Modify — shared validations ──
+=======
+    // ── Shared validations for Add/Modify ──
+>>>>>>> my-code-backup
     if (!form.bankName)    return setStatus({ type: 'error', msg: 'Bank Name is required.' });
     if (!form.openingDate) return setStatus({ type: 'error', msg: 'Opening Date is required.' });
     if (!form.icProdCode)  return setStatus({ type: 'error', msg: 'Interest Credit GL Product Code is required.' });
     if (!form.irProdCode)  return setStatus({ type: 'error', msg: 'Interest Receivable GL Product Code is required.' });
 
+<<<<<<< HEAD
     if (isModify && selectedRow === null)
       return setStatus({ type: 'error', msg: 'Please select a record from the grid to modify.' });
 
+=======
+>>>>>>> my-code-backup
     if (!isNew && !form.productCode)
       return setStatus({ type: 'error', msg: 'Please enter a valid GL Product Code.' });
 
@@ -2982,20 +3213,32 @@ export default function TermDepositCreate({ onNavigate }) {
           irProdName:     form.irProdName,
           irAccNum:       form.irAccNum,
           irCustName:     form.irCustName,
+<<<<<<< HEAD
           stage:          STAGE.MODIFY,        // 1002
           brcd:           1,
         };
         const res  = await fetch(`${API_BASE}/modify`, {
           method:  'POST',
+=======
+          brcd:           selectedRecord?.brcd ?? 1,
+        };
+        const res  = await fetch(`${API_BASE}/modify`, {
+          method:  'PUT',                                 // ← correct HTTP verb
+>>>>>>> my-code-backup
           headers: { 'Content-Type': 'application/json' },
           body:    JSON.stringify(payload),
         });
         const json = await res.json();
         if (json.success) {
           setStatus({ type: 'success', msg: `✅ Record GL: ${form.productCode} updated. Stage set to 1002.` });
+<<<<<<< HEAD
           setRecords(r => r.map((rec, i) =>
             i === selectedRow ? { ...rec, stage: STAGE.MODIFY, bankName: form.bankName, name: form.productName || rec.name } : rec
           ));
+=======
+          // Refresh grid to reflect updated stage
+          fetchRecords(mode);
+>>>>>>> my-code-backup
           setSelectedRow(null);
           setForm(EMPTY_FORM);
         } else {
@@ -3039,7 +3282,10 @@ export default function TermDepositCreate({ onNavigate }) {
         irProdName:     form.irProdName,
         irAccNum:       form.irAccNum,
         irCustName:     form.irCustName,
+<<<<<<< HEAD
         stage:          STAGE.ADD_NEW,       // 1001
+=======
+>>>>>>> my-code-backup
         brcd:           1,
       };
 
@@ -3054,7 +3300,11 @@ export default function TermDepositCreate({ onNavigate }) {
         const d = json.data;
         setStatus({
           type: 'success',
+<<<<<<< HEAD
           msg: `✅ ${d.message} | GL: ${d.glCode} | Receipt: ${d.receiptNo} | Acc: ${d.custAccno} | Stage: 1001`,
+=======
+          msg: `✅ ${d.message} | GL: ${d.glCode} | Receipt: ${d.receiptNo} | Acc: ${d.custAccno}`,
+>>>>>>> my-code-backup
         });
         setForm(EMPTY_FORM);
         setSelectedRow(null);
@@ -3068,7 +3318,11 @@ export default function TermDepositCreate({ onNavigate }) {
     }
   };
 
+<<<<<<< HEAD
   // ── Activity label ──
+=======
+  // ── Labels / classes ──────────────────────────────────────────────────────
+>>>>>>> my-code-backup
   const activityLabel = isNew
     ? `ADD (Stage: ${STAGE.ADD_NEW})`
     : isExisting
@@ -3081,7 +3335,10 @@ export default function TermDepositCreate({ onNavigate }) {
             ? `AUTHORISE (Stage: ${STAGE.AUTHORISE})`
             : 'VIEW';
 
+<<<<<<< HEAD
   // ── Primary button label ──
+=======
+>>>>>>> my-code-backup
   const primaryBtnLabel = submitting
     ? (isDelete ? 'Deleting…' : isAuth ? 'Authorising…' : isModify ? 'Updating…' : 'Saving…')
     : isNew
@@ -3094,6 +3351,7 @@ export default function TermDepositCreate({ onNavigate }) {
             ? 'Delete'
             : 'Authorise';
 
+<<<<<<< HEAD
   // ── Primary button CSS class ──
   const primaryBtnCss = isDelete
     ? 'im-btn-red'
@@ -3104,6 +3362,14 @@ export default function TermDepositCreate({ onNavigate }) {
         : 'im-btn-blue';
 
   // ── Grid row / button highlight classes ──
+=======
+  const primaryBtnCss = isDelete
+    ? 'im-btn-red'
+    : isAuth || isModify
+      ? 'im-btn-green'
+      : 'im-btn-blue';
+
+>>>>>>> my-code-backup
   const selBtnClass = isDelete ? 'del' : isAuth ? 'auth' : isView ? 'view-btn' : '';
   const selRowClass = isDelete
     ? 'im-grid-sel-red'
@@ -3113,7 +3379,10 @@ export default function TermDepositCreate({ onNavigate }) {
         ? 'im-grid-sel-teal'
         : 'im-grid-sel';
 
+<<<<<<< HEAD
   // ── Banner ──
+=======
+>>>>>>> my-code-backup
   const getBanner = () => {
     if (!isGridMode) return null;
     if (selectedRow !== null) {
@@ -3123,7 +3392,11 @@ export default function TermDepositCreate({ onNavigate }) {
       if (isDelete)  return { cls: 'im-banner-red',   msg: `🗑 Selected for deletion: ${base} — Stage will be set to 1004. Click Delete to confirm.` };
       if (isAuth)    return { cls: 'im-banner-green',  msg: `✦ Selected for authorisation: ${base} — Stage will be set to 1003. Click Authorise to confirm.` };
       if (isView)    return { cls: 'im-banner-teal',   msg: `👁 Viewing: ${base} — form is read-only.` };
+<<<<<<< HEAD
       return { cls: 'im-banner-default', msg: `✎ Modifying: ${base} — Stage will be set to 1002 on save. Click a different row to switch, or Clear All to reset.` };
+=======
+      return { cls: 'im-banner-default', msg: `✎ Modifying: ${base} — Stage will be set to 1002 on save.` };
+>>>>>>> my-code-backup
     }
     const icons = { modify: 'ℹ', delete: '🗑', authorise: '✦', view: '👁' };
     const msgs  = {
@@ -3138,12 +3411,17 @@ export default function TermDepositCreate({ onNavigate }) {
 
   const banner = getBanner();
 
+<<<<<<< HEAD
   // ── Render ────────────────────────────────────────────────────────────
+=======
+  // ── Render ────────────────────────────────────────────────────────────────
+>>>>>>> my-code-backup
   return (
     <>
       <style>{css}</style>
       <div className="im-wrap">
 
+<<<<<<< HEAD
         {/* Title */}
         <div className="im-title">Investment Master</div>
 
@@ -3157,6 +3435,19 @@ export default function TermDepositCreate({ onNavigate }) {
               { label: '✎ Delete',       m: 'delete',       ac: 'active-red'   },
               { label: '✦ Authorise',    m: 'authorise',    ac: 'active-green' },
               { label: '✦ View',         m: 'view',         ac: 'active-teal'  },
+=======
+        <div className="im-title">Investment Master</div>
+
+        <div className="im-actionbar">
+          <div className="im-actionbar-left">
+            {[
+              { label: '★ Add New',      m: 'add_new',    ac: 'active'       },
+              { label: '★ Add Existing', m: 'add_existing', ac: 'active'     },
+              { label: '⊙ Modify',       m: 'modify',     ac: 'active'       },
+              { label: '✎ Delete',       m: 'delete',     ac: 'active-red'   },
+              { label: '✦ Authorise',    m: 'authorise',  ac: 'active-green' },
+              { label: '✦ View',         m: 'view',       ac: 'active-teal'  },
+>>>>>>> my-code-backup
             ].map(({ label, m, ac }) => (
               <button
                 key={m}
@@ -3167,6 +3458,7 @@ export default function TermDepositCreate({ onNavigate }) {
               </button>
             ))}
           </div>
+<<<<<<< HEAD
           <div className="im-activity">
             Activity Perform : {activityLabel}
           </div>
@@ -3186,6 +3478,19 @@ export default function TermDepositCreate({ onNavigate }) {
         <div className="im-form">
 
           {/* Investment Type */}
+=======
+          <div className="im-activity">Activity Perform : {activityLabel}</div>
+        </div>
+
+        {banner && (
+          <div className={`im-modify-banner ${banner.cls}`}>{banner.msg}</div>
+        )}
+
+        {status && <div className={`im-status ${status.type}`}>{status.msg}</div>}
+
+        <div className="im-form">
+
+>>>>>>> my-code-backup
           <Row label="Investment Type" required>
             <select
               className="im-select im-select-full"
@@ -3200,7 +3505,10 @@ export default function TermDepositCreate({ onNavigate }) {
             </select>
           </Row>
 
+<<<<<<< HEAD
           {/* Product Code */}
+=======
+>>>>>>> my-code-backup
           <Row label="Product Code" required>
             {isNew ? (
               <input
@@ -3230,7 +3538,11 @@ export default function TermDepositCreate({ onNavigate }) {
               className={`im-input im-grow${isReadOnly ? ' readonly-view' : ''}`}
               placeholder={isNew ? 'Enter Product Name *' : 'Auto-filled from GL Code'}
               value={fetching && isExisting ? 'Loading…' : form.productName}
+<<<<<<< HEAD
               onChange={(isNew && !isReadOnly) || isModify ? setE('productName') : undefined}
+=======
+              onChange={(isNew || isModify) && !isReadOnly ? setE('productName') : undefined}
+>>>>>>> my-code-backup
               readOnly={isReadOnly || isExisting}
             />
             <span className="im-inline-lbl">A/C No</span>
@@ -3238,11 +3550,17 @@ export default function TermDepositCreate({ onNavigate }) {
               className="im-input shaded im-w70"
               value={isNew ? form.acNo : (form.accNo || '')}
               readOnly
+<<<<<<< HEAD
               title={isNew ? 'Default: 1' : 'Auto: MAX(CustAccno) + 1 for this GL'}
             />
           </Row>
 
           {/* Bank / Branch */}
+=======
+            />
+          </Row>
+
+>>>>>>> my-code-backup
           <Row label={isNew ? 'Investment Bank' : 'Bank Name'} required>
             <input
               className={`im-input im-grow${isReadOnly ? ' readonly-view' : ''}`}
@@ -3260,13 +3578,17 @@ export default function TermDepositCreate({ onNavigate }) {
             />
           </Row>
 
+<<<<<<< HEAD
           {/* Acc No — Add Existing only */}
+=======
+>>>>>>> my-code-backup
           <Row label="Acc No" hidden={isNew || isModify || isDelete || isAuth || isView}>
             <input
               className="im-input shaded im-w110"
               placeholder="Auto-generated"
               value={form.accNo}
               readOnly
+<<<<<<< HEAD
               title="Auto: MAX(CustAccno) + 1 for this GL"
             />
           </Row>
@@ -3278,6 +3600,16 @@ export default function TermDepositCreate({ onNavigate }) {
               value={isNew ? form.receiptNo : (form.receiptNo || '')}
               readOnly
               title={isNew ? 'Default: 1' : 'Auto: MAX(ReceiptNo) + 1 for this GL'}
+=======
+            />
+          </Row>
+
+          <Row label="Receipt No" required>
+            <input
+              className="im-input shaded im-w90"
+              value={form.receiptNo || ''}
+              readOnly
+>>>>>>> my-code-backup
             />
             <input
               className={`im-input im-grow${isReadOnly ? ' readonly-view' : ''}`}
@@ -3288,7 +3620,10 @@ export default function TermDepositCreate({ onNavigate }) {
             />
           </Row>
 
+<<<<<<< HEAD
           {/* Board Resolution */}
+=======
+>>>>>>> my-code-backup
           <Row label="Board Resolution No">
             <input
               className={`im-input im-w130${isReadOnly ? ' readonly-view' : ''}`}
@@ -3307,7 +3642,10 @@ export default function TermDepositCreate({ onNavigate }) {
             />
           </Row>
 
+<<<<<<< HEAD
           {/* Opening Date */}
+=======
+>>>>>>> my-code-backup
           <Row label="Opening Date" required>
             <input
               className={`im-input im-w130${isReadOnly ? ' readonly-view' : ''}`}
@@ -3320,7 +3658,10 @@ export default function TermDepositCreate({ onNavigate }) {
 
           <hr className="im-divider" />
 
+<<<<<<< HEAD
           {/* Interest Credit GL */}
+=======
+>>>>>>> my-code-backup
           <div className="im-gl-hdr">Interest Credit GL :</div>
           <Row label="Product Code :" required>
             <GLCodeInput
@@ -3339,7 +3680,10 @@ export default function TermDepositCreate({ onNavigate }) {
             />
           </Row>
 
+<<<<<<< HEAD
           {/* Interest Receivable GL */}
+=======
+>>>>>>> my-code-backup
           <div className="im-gl-hdr" style={{ marginTop: 4 }}>Interest Receivable GL :</div>
           <Row label="Product Code :" required>
             <GLCodeInput
@@ -3357,7 +3701,11 @@ export default function TermDepositCreate({ onNavigate }) {
               readOnly={isReadOnly}
             />
             <span className="im-inline-lbl">
+<<<<<<< HEAD
               Account Number : {!isView && <span className="req">*</span>}
+=======
+              Account Number :{!isView && <span className="req"> *</span>}
+>>>>>>> my-code-backup
             </span>
             <input
               className="im-input shaded im-w90"
@@ -3365,7 +3713,10 @@ export default function TermDepositCreate({ onNavigate }) {
               value={isNew ? form.irAccNum : (form.accNo || '')}
               onChange={isNew && !isReadOnly ? setE('irAccNum') : undefined}
               readOnly={!isNew || isReadOnly}
+<<<<<<< HEAD
               title={isNew ? '' : 'Auto: MAX(CustAccno) + 1 for this GL'}
+=======
+>>>>>>> my-code-backup
             />
             <GLSearchInput
               value={form.irCustName}
@@ -3378,7 +3729,10 @@ export default function TermDepositCreate({ onNavigate }) {
 
         </div>
 
+<<<<<<< HEAD
         {/* Bottom buttons */}
+=======
+>>>>>>> my-code-backup
         <div className="im-btnbar">
           {!isView && (
             <button
@@ -3391,7 +3745,16 @@ export default function TermDepositCreate({ onNavigate }) {
           )}
           <button
             className="im-btn im-btn-grey"
+<<<<<<< HEAD
             onClick={() => { switchMode(mode); setStatus(null); }}
+=======
+            onClick={() => {
+              setStatus(null);
+              setSelectedRow(null);
+              setForm(EMPTY_FORM);
+              if (isGridMode) fetchRecords(mode);
+            }}
+>>>>>>> my-code-backup
           >
             Clear All
           </button>
@@ -3403,7 +3766,10 @@ export default function TermDepositCreate({ onNavigate }) {
           </button>
         </div>
 
+<<<<<<< HEAD
         {/* ── Grid — shown for Modify, Delete, Authorise, View ── */}
+=======
+>>>>>>> my-code-backup
         {isGridMode && (
           <RecordGrid
             records={records}
@@ -3411,6 +3777,10 @@ export default function TermDepositCreate({ onNavigate }) {
             onSelect={handleGridSelect}
             selBtnClass={selBtnClass}
             selRowClass={selRowClass}
+<<<<<<< HEAD
+=======
+            loading={gridLoading}
+>>>>>>> my-code-backup
           />
         )}
 
