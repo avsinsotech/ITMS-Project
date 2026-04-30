@@ -12,7 +12,11 @@ import NewInvestment from './components/screens/NewInvestment';
 import Portfolio from './components/screens/Portfolio';
 import GSec from './components/screens/GSec';
 import CategoryShift from './components/screens/CategoryShift';
+<<<<<<< HEAD
 import FDBonds from './components/screens/FDBonds';
+=======
+
+>>>>>>> my-code-backup
 
 import CallMoney from './components/screens/CallMoney';
 import CPCD from './components/screens/CPCD';
@@ -28,10 +32,13 @@ import RBIReturns from './components/screens/RBIReturns';
 import AuditTrail from './components/screens/AuditTrail';
 import Masters from './components/screens/Masters';
 import FileUpload from './components/screens/FileUpload';
+<<<<<<< HEAD
 import FDNew from './components/screens/FDNew';
 import BondNew from './components/screens/BondNew';
 import FDView from './components/screens/FDView';
 import BondView from './components/screens/BondView';
+=======
+>>>>>>> my-code-backup
 import GSecSell from './components/screens/GSecSell';
 import SecurityMaster from './components/screens/SecurityMaster';
 import BrokerMaster from './components/screens/BrokerMaster';
@@ -44,8 +51,11 @@ import TermDepositCalc from './components/screens/TermDepositCalc';
 import BalanceRegister from './components/screens/BalanceRegister';
 import InvestmentRegister from './components/screens/InvestmentRegister';
 import InvestmentMaturity from './components/screens/InvestmentMaturity';
+<<<<<<< HEAD
 import GSecMTMValuation from './components/screens/GSecMTMValuation';
 import GSecAmortization from './components/screens/GSecAmortization';
+=======
+>>>>>>> my-code-backup
 
 // in renderScreen():
 
@@ -154,7 +164,11 @@ const navigate = (screenId, params = {}) => {
       case 'gsec_security_master': return <SecurityMaster {...props} />;
       case 'gsec_broker_master': return <BrokerMaster {...props} />;
       case 'gsec_policy': return <GSecPolicy {...props} />;
+<<<<<<< HEAD
       case 'fd_bonds': return <FDBonds {...props} subScreen={fdBondsSubScreen} />;
+=======
+      
+>>>>>>> my-code-backup
       // Mutual Fund Sub-screens
       case 'mf_dashboard':     return <MFDashboard {...props} />;
       case 'mf_amc_master':    return <Amcmaster {...props} />;
@@ -204,6 +218,7 @@ case 'fd_report_maturity': return <InvestmentMaturity {...props} />;
       case 'audit': return <AuditTrail {...props} />;
       case 'master': return <Masters {...props} />;
       case 'file_upload': return <FileUpload {...props} />;
+<<<<<<< HEAD
        case 'fd_new':         return <FDNew {...props} />;
       case 'bond_new':       return <BondNew {...props} />;
       case 'fd_view':        return <FDView {...props} />;
@@ -212,6 +227,9 @@ case 'fd_report_maturity': return <InvestmentMaturity {...props} />;
       case 'gsec_portfolio_holding': return <HoldingRegister {...props} />;
       case 'gsec_val_mtm': return <GSecMTMValuation {...props} />;
       case 'gsec_val_amortization': return <GSecAmortization {...props} />;
+=======
+       case 'gsec_portfolio_holding': return <HoldingRegister {...props} />;
+>>>>>>> my-code-backup
      
      
       default: return <Dashboard {...props} />;
