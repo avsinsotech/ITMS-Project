@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+trace_log.txt
+execution_logs.txt
+
+# Editor / System
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Build
+dist/
+dist.zip
+build/

@@ -1,0 +1,21 @@
+[2026-04-28T11:37:05.193Z] EXEC ISP_GSecuTransaction
+PARAMS: {"ID":"526","MID":"12","EntryDate":"2026-04-28T11:37:04.816Z","Flag":"Purchase","BRCD":"1","Counter":"1","SLR":"1","Category":"2","Subglcode":"0","Accno":"9001","SType":"0","PL":"0","RecsrNo":"1","IR":"0","AR":"126000","AvAmt":"0"}
+STATUS: SUCCESS
+RECORDS AFFECTED/RETURNED: 1
+--------------------------------------------------
+[2026-04-28T11:38:19.066Z] EXEC ISP_GSecuTransaction
+PARAMS: {"ID":"528","MID":"12","EntryDate":"2026-04-28T11:38:18.821Z","Flag":"Purchase","BRCD":"1","Counter":"1","SLR":"1","Category":"2","Subglcode":"0","Accno":"9001","SType":"0","PL":"0","RecsrNo":"1","IR":"0","AR":"189000","AvAmt":"0"}
+STATUS: SUCCESS
+RECORDS AFFECTED/RETURNED: 1
+--------------------------------------------------
+[2026-04-29T04:17:22.245Z] EXEC ISP_GSecuTransaction
+PARAMS: {"ID":"529","MID":"12","EntryDate":"2026-04-29T04:17:19.979Z","Flag":"Purchase","BRCD":"1","Counter":"1","SLR":"1","Category":"2","Subglcode":"416","Accno":"9001","SType":"416","PL":"0","RecsrNo":"1","IR":"0","AR":"0","AvAmt":"0"}
+STATUS: SUCCESS
+RECORDS AFFECTED/RETURNED: 1
+--------------------------------------------------
+[2026-04-30T09:03:47.982Z] EXEC ISP_GSecuTransaction
+PARAMS: {"ID":"560","MID":"12","EntryDate":"2026-04-30T09:03:47.358Z","Flag":"Purchase","BRCD":"1","Counter":"1","SLR":"1","Category":"1","Subglcode":"416","Accno":"398274878983","SType":"416","PL":"0","RecsrNo":"1","IR":"0","AR":"0","AvAmt":"0"}
+STATUS: FAILED
+RECORDS AFFECTED/RETURNED: 0
+ERROR: {"code":"EREQUEST","originalError":{},"name":"RequestError","precedingErrors":[{"code":"EREQUEST","originalError":{"info":{"name":"ERROR","handlerName":"onErrorMessage","number":242,"state":3,"class":16,"message":"The conversion of a nvarchar data type to a datetime data type resulted in an out-of-range value.","serverName":"VM1","procName":"ISP_GSecuTransaction","lineNumber":462}},"name":"RequestError","number":242,"lineNumber":462,"state":3,"class":16,"serverName":"VM1","procName":"ISP_GSecuTransaction"},{"code":"EREQUEST","originalError":{"info":{"name":"ERROR","handlerName":"onErrorMessage","number":242,"state":3,"class":16,"message":"The conversion of a nvarchar data type to a datetime data type resulted in an out-of-range value.","serverName":"VM1","procName":"ISP_GSecuTransaction","lineNumber":499}},"name":"RequestError","number":242,"lineNumber":499,"state":3,"class":16,"serverName":"VM1","procName":"ISP_GSecuTransaction"},{"code":"EREQUEST","originalError":{"info":{"name":"ERROR","handlerName":"onErrorMessage","number":242,"state":3,"class":16,"message":"The conversion of a nvarchar data type to a smalldatetime data type resulted in an out-of-range value.","serverName":"VM1","procName":"ISP_GSecuTransaction","lineNumber":515}},"name":"RequestError","number":242,"lineNumber":515,"state":3,"class":16,"serverName":"VM1","procName":"ISP_GSecuTransaction"}]}
+--------------------------------------------------
