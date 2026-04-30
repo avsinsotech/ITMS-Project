@@ -216,7 +216,6 @@ async function createInvestmentAddExisting(payload, mid = null, brcd = DEFAULT_B
 
     const inserted = await repo.insertInvAccountMaster(invData);
 
-<<<<<<< HEAD
     return {
         message:    'Existing investment linked successfully. Pending checker approval.',
         glCode:     payload.glCode,
@@ -224,22 +223,6 @@ async function createInvestmentAddExisting(payload, mid = null, brcd = DEFAULT_B
         custAccno:  nextAccNo,
         insertedId: inserted?.InsertedID ?? null,
     };
-=======
-    // return {
-    //     message:    'Existing investment linked successfully. Pending checker approval.',
-    //     glCode:     payload.glCode,
-    //     receiptNo:  nextReceiptNo,
-    //     custAccno:  nextAccNo,
-    //     insertedId: inserted?.InsertedID ?? null,
-    // };
-    return {
-    message:    'Existing investment linked successfully. Pending authorisation.',  // ← updated
-    glCode:     payload.glCode,
-    receiptNo:  nextReceiptNo,
-    custAccno:  nextAccNo,
-    insertedId: inserted?.InsertedID ?? null,
-};
->>>>>>> my-code-backup
 }
 
 /**

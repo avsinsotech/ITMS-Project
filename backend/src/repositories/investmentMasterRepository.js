@@ -1,5 +1,4 @@
 
-<<<<<<< HEAD
 // // src/repositories/investmentMasterRepository.js
 // const { getPool, sql } = require('../config/db');
 
@@ -127,8 +126,6 @@
 //      getNextReceiptNoForGL,
 //     getNextAccNoForGL,
 // };
-=======
->>>>>>> my-code-backup
 // src/repositories/investmentMasterRepository.js
 const { getPool, sql } = require('../config/db');
 

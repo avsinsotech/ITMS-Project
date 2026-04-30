@@ -133,7 +133,6 @@ export const getSecuritiesByProdCode = async (prodCode) => {
     }
     return response.json();
 };
-<<<<<<< HEAD
 
 /**
  * Execute Classification and Shift process
@@ -151,5 +150,3 @@ export const executeShiftingProcess = async (data) => {
     }
     return response.json();
 };
-=======
->>>>>>> my-code-backup

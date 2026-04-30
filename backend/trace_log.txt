@@ -1021,3 +1021,34 @@
   "Constituent": "PUNE PEOPLES COOPERATIVE BANK LTD",
   "Constituent Number": "03679"
 }
+
+[2026-04-30T09:04:37.235Z] MODULAR TRACE 1770:
+{
+  "Member": "IDBI BANK LIMITED 1",
+  "Member Number": "T0087",
+  "User": "AMOL HANUMANT JARANDE",
+  "User Number": "06199",
+  "Market": "Regular",
+  "Sub Market": "Standard",
+  "Order Number": "202510100008704",
+  "Trade Date": "10 Oct 2025",
+  "Trade Time": "12:50:38",
+  "Trade Number": "202510100001770",
+  "Trade Type": "BUY",
+  "Settlement Type": "T+1",
+  "Settlement Date": "13 Oct 2025",
+  "ISIN": "IN0020250091",
+  "Genspec": "IN0020250091",
+  "Security": "06.48 GOVT. STOCK 2035",
+  "Maturity Date": "06 Oct 2035",
+  "Amount (Rs)": "50000000",
+  "Trade Price (Rs)": "100.2050",
+  "Trade Yield (%)": "6.4516",
+  "Trade Amount (Rs)": "50102500.00",
+  "Last Interest Payment Date": "06 Oct 2025",
+  "Number of Broken Period Days": "7",
+  "Accrued Interest (Rs)": "63000.00",
+  "Sett Consideration (Rs)": "50165500.00",
+  "Constituent": "PUNE PEOPLES COOPERATIVE BANK LTD",
+  "Constituent Number": "03679"
+}
